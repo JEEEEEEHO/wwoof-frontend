@@ -11,9 +11,10 @@ import RoutLayout from "./components/RoutLayout";
 import EventRootLayout from "./components/pages/EventRoot";
 import ErrorPage from "./components/pages/Error";
 import { action as manipulateEventAction } from "./components/EventForm";
-import NewsletterPage, {
-  action as newsletterAction,
-} from "./components/Newsletter";
+
+import BoardDetailPage from "./components/board/BoardDetailPage";
+import BoardEditPage from "./components/board/BoardEditPage";
+import BoardsPage, {loader as boardsLoader} from "./components/board/Board";
 
 const router = createBrowserRouter([
   {
@@ -56,9 +57,31 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "newsletter",
-        element: <NewsletterPage />,
-        action: newsletterAction,
+        path: "board",
+        children: [
+          {
+            index: true,
+            element: <BoardsPage />,
+            loader : boardsLoader
+          },
+          {
+            path: ":boardId",
+            id: "board-detail",
+            //loader: boardDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <BoardDetailPage />,
+                action: deleteEventAction,
+              },
+              {
+                path: "edit",
+                element: <BoardEditPage />,
+                action: manipulateEventAction,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
