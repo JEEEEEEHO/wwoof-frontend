@@ -25,7 +25,7 @@ function BoardList({ boards }) {
                   <td>{board.title}</td>
                 </Link>
                 <td>{board.author}</td>
-                <td>{board.created_date}</td>
+                <td>{board.modifiedDate}</td>
               </tr>
             ))}
           </tbody>

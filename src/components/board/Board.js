@@ -8,7 +8,7 @@ function BoardsPage() {
   return (
     <Suspense fallback={<p style={{ textAlign: "center" }}>Loading</p>}>
       <Await resolve={boards}>
-        {(loadEvent) => <BoardList events={loadEvent} />}
+        {(loadBoard) => <BoardList boards={loadBoard} />}
       </Await>
     </Suspense>
   );
@@ -33,7 +33,7 @@ async function loadBoard() {
   } else {
       const resData = await response.json();
       console.log(resData);
-    return resData.boards;
+    return resData;
   }
 }
 export function loader() {
