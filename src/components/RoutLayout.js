@@ -13,6 +13,7 @@ function RoutLayout() {
         <Outlet></Outlet>
       </main>
       <FooterNavigation />
+      
     </>
   );
 }

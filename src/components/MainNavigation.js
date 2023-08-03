@@ -7,36 +7,19 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <NavLink to="/"><div className={classes.logo}>WWOOF KOREA</div></NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/"
-
-            >
-              호스트 찾기
+            <NavLink to="/">
+              <div className={classes.logo}>WWOOF KOREA</div>
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/newsletter"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-            >
-              Newsletter
-            </NavLink>
+            <NavLink to="hostSearch">호스트 찾기</NavLink>
           </li>
         </ul>
       </nav>
       <nav>
         <ul>
           <li>
-            <NavLink
-
-            >
-              회원가입
-            </NavLink>
+            <NavLink>로그인</NavLink>
           </li>
         </ul>
       </nav>

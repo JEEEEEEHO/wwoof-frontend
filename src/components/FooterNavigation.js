@@ -16,7 +16,7 @@ function FooterNavigation() {
       <nav>
         <ul>
           <li>
-            <NavLink to="/board">공지사항</NavLink>
+            <NavLink to="boards">공지사항</NavLink>
           </li>
         </ul>
       </nav>
