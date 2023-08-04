@@ -3,9 +3,9 @@ import BoardForm from "./BoardForm";
 
 function BoardEditPage() {
 
-    const data = useRouteLoaderData('board-detail')
+    const data = useRouteLoaderData("board-detail");
     return(
-        <BoardForm method='patch' board={data} />
+        <BoardForm method='PUT' board={data} />
     )
 }
 

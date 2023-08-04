@@ -23,7 +23,7 @@ function BoardItem({ board }) {
       <p>{board.author}</p>
       <p>{board.content}</p>
       <menu className={classes.actions}>
-          <Link to="edit">Edit</Link>
+          <Link to="edit">수정</Link>
           <button onClick={startDeleteHandler}>삭제</button>
         </menu>
     </article>

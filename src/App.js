@@ -8,16 +8,17 @@ import BoardsPage, { loader as boardsLoader } from "./components/board/Board";
 import BoardDetailPage, {
   loader as boardDetailLoader,
 } from "./components/board/BoardDetailPage";
+import NewBoardPage from "./components/board/NewBoardPage"
 import BoardEditPage from "./components/board/BoardEditPage";
+import {action as manipulateBoardAction} from "./components/board/BoardForm"
 import HostSearch from "./components/search/HostSearch";
-
 import HostDetailPage from "./components/search/HostDetailPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RoutLayout />,
-    errorElement: <ErrorPage />,
+    //errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Homepage /> },
 
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
             loader: boardsLoader,
           },
           {
+            path: "new",
+            element: <NewBoardPage />,
+            //loader: boardsLoader,
+          },
+          {
             path: ":boardNum",
             id: "board-detail",
             loader: boardDetailLoader,
@@ -56,9 +62,9 @@ const router = createBrowserRouter([
                 // action: deleteEventAction,
               },
               {
-                index: "edit",
+                path: "edit",
                 element: <BoardEditPage />,
-                // action: deleteEventAction,
+                action: manipulateBoardAction,
               },
             ],
           },

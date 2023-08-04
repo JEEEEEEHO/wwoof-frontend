@@ -3,6 +3,8 @@ import {
   useActionData,
   useNavigate,
   useNavigation,
+  json,
+  redirect
 } from "react-router-dom";
 import classes from "./BoardForm.module.css";
 
@@ -11,14 +13,9 @@ function BoardForm({ method, board }) {
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
   const data = useActionData();
-  const formType  = methodType();
-  
+
   function cancelHandler() {
     navigate("..");
-  }
-  
-  function methodType({method}){
-    return method=='fetch'?true:false;
   }
 
   return (
@@ -46,18 +43,9 @@ function BoardForm({ method, board }) {
           id="author"
           type="text"
           name="author"
-            {method}
+          disabled={board ? true : false}
+          required={board ? false : true}
           defaultValue={board ? board.author : ""}
-        />
-      </p>
-      <p>
-        <label htmlFor="date">Date</label>
-        <input
-          id="date"
-          type="date"
-          name="date"
-          required
-          defaultValue={board ? board.date : ""}
         />
       </p>
       <p>
@@ -81,3 +69,38 @@ function BoardForm({ method, board }) {
 }
 
 export default BoardForm;
+
+export async function action({ request, params }) {
+  const method = request.method;
+  const data = await request.formData();
+
+  const eventData = {
+    title: data.get('title'),
+    author: data.get('author'),
+    content: data.get('content'),
+  };
+
+  let url = 'http://localhost:8080/api/post/save';
+
+  if (method === 'PUT') {
+    const id = params.boardNum; 
+    url = 'http://localhost:8080/api/post/' + id;
+  }
+  console.log("url : "+url);
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(eventData),
+  });
+  
+  if(response.state === 422){
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json({ message: 'Could not save board.' }, { status: 500 });
+  }
+  return redirect('/boards')
+}
