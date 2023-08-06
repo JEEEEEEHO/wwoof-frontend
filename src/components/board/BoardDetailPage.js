@@ -1,4 +1,4 @@
-import { json, useRouteLoaderData } from "react-router-dom";
+import { json, useRouteLoaderData, redirect } from "react-router-dom";
 import BoardItem from './BoardItem';
 
 function BoardDetailPage() {
@@ -26,4 +26,20 @@ export async function loader({ request, params }) {
   } else{
     return response;
   }
+}
+
+export async function action({params, request}){
+  const id = params.boardNum; 
+  const response =await fetch ('http://localhost:8080/api/post/' + id, {
+    method : request.method, // method : 'delete'
+  });
+  if(!response.ok){
+    throw json(
+      {message : 'could not delete event'},
+      {
+        status: 500,
+      }
+    );
+  }
+  return redirect('/boards')
 }

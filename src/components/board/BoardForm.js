@@ -86,7 +86,6 @@ export async function action({ request, params }) {
     const id = params.boardNum; 
     url = 'http://localhost:8080/api/post/' + id;
   }
-  console.log("url : "+url);
   const response = await fetch(url, {
     method: method,
     headers: {

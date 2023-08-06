@@ -7,20 +7,29 @@ import ErrorPage from "./components/pages/Error";
 import BoardsPage, { loader as boardsLoader } from "./components/board/Board";
 import BoardDetailPage, {
   loader as boardDetailLoader,
+  action as deleteBoardAction,
 } from "./components/board/BoardDetailPage";
-import NewBoardPage from "./components/board/NewBoardPage"
+import NewBoardPage from "./components/board/NewBoardPage";
 import BoardEditPage from "./components/board/BoardEditPage";
-import {action as manipulateBoardAction} from "./components/board/BoardForm"
+import { action as manipulateBoardAction } from "./components/board/BoardForm";
 import HostSearch from "./components/search/HostSearch";
 import HostDetailPage from "./components/search/HostDetailPage";
+import Authentification from "./components/login/Authentification";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RoutLayout />,
     //errorElement: <ErrorPage />,
+    id: 'root',
     children: [
       { index: true, element: <Homepage /> },
+
+      {
+        path: "auth",
+        element: <Authentification />,
+        //action :
+      },
 
       {
         path: "hostSearch",
@@ -31,14 +40,12 @@ const router = createBrowserRouter([
           },
           {
             path: ":hostId",
-            children: [
-              { index: true, element: <HostDetailPage /> }
-            ],
+            children: [{ index: true, element: <HostDetailPage /> }],
           },
         ],
       },
+
       {
-        
         path: "boards",
         children: [
           {
@@ -49,7 +56,7 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: <NewBoardPage />,
-            //loader: boardsLoader,
+            action: manipulateBoardAction,
           },
           {
             path: ":boardNum",
@@ -59,7 +66,7 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <BoardDetailPage />,
-                // action: deleteEventAction,
+                action: deleteBoardAction,
               },
               {
                 path: "edit",
