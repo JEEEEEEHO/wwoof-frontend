@@ -19,7 +19,20 @@ function BoardsPage() {
 export default BoardsPage;
 
 async function loadBoard() {
-  const response = await fetch("http://localhost:8080/api/post/list");
+
+  let headers = new Headers({
+    "Content-Type": "application/json",
+  });
+  
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if (accessToken && accessToken !== null) {
+    headers.append("Authorization", "Bearer " + accessToken);
+  }
+
+  const response = await fetch("http://localhost:8080/api/post/list", {
+    method: "GET",
+    headers: headers,
+  });
 
   if (!response.ok) {
     // return { isError: true, message: 'Could not fetch events.' };

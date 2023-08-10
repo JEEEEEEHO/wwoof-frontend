@@ -14,7 +14,8 @@ import BoardEditPage from "./components/board/BoardEditPage";
 import { action as manipulateBoardAction } from "./components/board/BoardForm";
 import HostSearch from "./components/search/HostSearch";
 import HostDetailPage from "./components/search/HostDetailPage";
-import Authentification from "./components/login/Authentification";
+import Login from "./components/login/Login";
+import {action as signinAction} from "./components/login/LoginForm";
 
 const router = createBrowserRouter([
   {
@@ -26,9 +27,9 @@ const router = createBrowserRouter([
       { index: true, element: <Homepage /> },
 
       {
-        path: "auth",
-        element: <Authentification />,
-        //action :
+        path: "login",
+        element: <Login />,
+        action : signinAction
       },
 
       {

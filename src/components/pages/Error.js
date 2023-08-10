@@ -15,6 +15,11 @@ function ErrorPage(){
         message = 'Could not find resoure or page'
     }
 
+    if(error.status === 403){
+        window.location.href = "login";
+        // redirect
+    }
+
  return <PageContent title={title}><p>{message}</p></PageContent>
 }
 export default ErrorPage;

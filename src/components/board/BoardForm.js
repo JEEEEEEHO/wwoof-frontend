@@ -74,7 +74,7 @@ export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
 
-  const eventData = {
+  const BoardData = {
     title: data.get('title'),
     author: data.get('author'),
     content: data.get('content'),
@@ -91,7 +91,7 @@ export async function action({ request, params }) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(eventData),
+    body: JSON.stringify(BoardData),
   });
   
   if(response.state === 422){

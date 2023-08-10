@@ -20,18 +20,14 @@ function MainNavigation() {
       </nav>
       <nav>
         <ul>
-          {!token && (
-            <li>
-              <NavLink to="auth">로그인</NavLink>
-            </li>
-          )}
-          {token && (
-            <li>
-              <Form action="logout" method="post">
-                <button>로그아웃</button>
-              </Form>
-            </li>
-          )}
+          <li>
+            <NavLink to="login">로그인</NavLink>
+          </li>
+          <li>
+            <Form action="logout" method="post">
+              <button>로그아웃</button>
+            </Form>
+          </li>
         </ul>
       </nav>
     </header>
