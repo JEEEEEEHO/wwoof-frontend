@@ -15,23 +15,36 @@ import { action as manipulateBoardAction } from "./components/board/BoardForm";
 import HostSearch from "./components/search/HostSearch";
 import HostDetailPage from "./components/search/HostDetailPage";
 import Login from "./components/login/Login";
-import {action as signinAction} from "./components/login/LoginForm";
+import { action as signinAction } from "./components/login/LoginForm";
+import Join from "./components/login/Join";
+import { action as joinAction } from "./components/login/JoinForm";
+import { loader as logoutLoader } from "./components/login/Logout";
+import { tokenLoader } from "./components/auth";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RoutLayout />,
     //errorElement: <ErrorPage />,
-    id: 'root',
+    id: "root",
+    loader: tokenLoader,
     children: [
       { index: true, element: <Homepage /> },
 
       {
         path: "login",
         element: <Login />,
-        action : signinAction
+        action: signinAction,
       },
-
+      {
+        path: "logout",
+        loader: logoutLoader,
+      },
+      {
+        path: "join",
+        element: <Join />,
+        action: joinAction,
+      },
       {
         path: "hostSearch",
         children: [

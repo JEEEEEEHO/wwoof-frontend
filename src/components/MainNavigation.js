@@ -1,5 +1,5 @@
 import classes from "./MainNavigation.module.css";
-import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
+import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
 
 function MainNavigation() {
   const token = useRouteLoaderData("root");
@@ -20,14 +20,21 @@ function MainNavigation() {
       </nav>
       <nav>
         <ul>
-          <li>
-            <NavLink to="login">로그인</NavLink>
-          </li>
-          <li>
-            <Form action="logout" method="post">
-              <button>로그아웃</button>
-            </Form>
-          </li>
+          {!token && (
+            <li>
+              <NavLink to="login">로그인</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="/">마이페이지</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="logout">로그아웃</NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

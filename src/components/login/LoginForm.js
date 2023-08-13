@@ -1,11 +1,12 @@
 import React from "react";
 //import { signin } from "./service/ApiService";
 import { Container, Grid, Typography, TextField, Button } from "@mui/material";
-import { Form, json, redirect } from "react-router-dom";
+import { Form, json, redirect, Link } from "react-router-dom";
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 function LoginForm({ method }) {
+
   return (
     <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
       <Grid container spacing={2}>
@@ -47,6 +48,9 @@ function LoginForm({ method }) {
               로그인
             </Button>
           </Grid>
+          <Grid item>
+            <Link to="/join">계정이 없습니까? 여기서 가입 하세요.</Link>
+          </Grid>
         </Grid>
       </Form>
     </Container>
@@ -65,11 +69,11 @@ export async function action({ request, params }) {
   };
 
   let url = "http://localhost:8080/auth/signin";
-  
+
   let headers = new Headers({
     "Content-Type": "application/json",
   });
-  
+
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
   if (accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer " + accessToken);
@@ -84,6 +88,7 @@ export async function action({ request, params }) {
   const resData = await response.json();
   if (resData.token) {
     localStorage.setItem(ACCESS_TOKEN, resData.token);
+    alert("Login Success");
     return redirect("/");
   }
 
