@@ -2,58 +2,57 @@ import React from "react";
 //import { signin } from "./service/ApiService";
 import { Container, Grid, Typography, TextField, Button } from "@mui/material";
 import { Form, json, redirect, Link } from "react-router-dom";
+import "./LoginForm.module.css";
+import { GOOGLE_AUTH_URL, KAKAO_AUTH_URL } from "./index";
+import googleLogo from "../../img/google-logo.png";
+import kakaoLogo from "../../img/kakao-logo.png";
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 function LoginForm({ method }) {
-
   return (
-    <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography component="h1" variant="h5">
-            로그인
-          </Typography>
-        </Grid>
-      </Grid>
-      <Form method={method}>
-        {" "}
-        {/* submit 버튼을 누르면 handleSubmit이 실행됨. */}
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="email"
-              label="이메일 주소"
+    <div className="login-container">
+      <div className="login-content">
+        <Form method={method}>
+          <div className="form-item">
+            <input
+              type="email"
               name="email"
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
+              id="email"
+              className="form-control"
+              placeholder="Email"
               required
-              fullWidth
-              name="password"
-              label="패스워드"
-              type="password"
-              id="password"
-              autoComplete="current-password"
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              로그인
-            </Button>
-          </Grid>
-          <Grid item>
-            <Link to="/join">계정이 없습니까? 여기서 가입 하세요.</Link>
-          </Grid>
-        </Grid>
-      </Form>
-    </Container>
+          </div>
+          <div className="form-item">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="form-control"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div className="form-item">
+            <button type="submit" className="btn btn-block btn-primary">
+              Login
+            </button>
+          </div>
+        </Form>
+        <span className="signup-link">
+          <Link to="/join">계정이 없습니까? 여기서 가입 하세요.</Link>
+        </span>
+        <div className="social-login">
+          <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
+            <img src={googleLogo} alt="Google" /> Log in with Google
+          </a>
+          <a className="btn btn-block social-btn kakao" href={KAKAO_AUTH_URL}>
+            <img src={kakaoLogo} alt="Kakao" /> Log in with Kakao
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 

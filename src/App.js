@@ -20,6 +20,7 @@ import Join from "./components/login/Join";
 import { action as joinAction } from "./components/login/JoinForm";
 import { loader as logoutLoader } from "./components/login/Logout";
 import { tokenLoader } from "./components/auth";
+import SocialLogin from "./components/login/SocialLogin";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: "join",
         element: <Join />,
         action: joinAction,
+      },
+      {
+        path: "socialLogin",
+        element: <SocialLogin />,
       },
       {
         path: "hostSearch",
