@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function HostSearchList(props) {
-  console.log(props.hosts);
   return (
     <>
       <h1>HostSearchList</h1>

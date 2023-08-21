@@ -8,7 +8,6 @@ const HOSTS = [
   ];
 
  function HostSearch() {
-    console.log(HOSTS);
     return (
         <>
             <HostSearchList hosts={HOSTS} />

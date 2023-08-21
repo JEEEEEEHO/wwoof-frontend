@@ -12,18 +12,23 @@ import BoardDetailPage, {
 import NewBoardPage from "./components/board/NewBoardPage";
 import BoardEditPage from "./components/board/BoardEditPage";
 import { action as manipulateBoardAction } from "./components/board/BoardForm";
-import HostSearch from "./components/search/HostSearch";
-import HostDetailPage from "./components/search/HostDetailPage";
+import HostSearch from "./components/host/HostSearch";
+import HostDetailPage from "./components/host/HostDetailPage";
 import Login from "./components/login/Login";
 import { action as signinAction } from "./components/login/LoginForm";
 import Join from "./components/login/Join";
 import { action as joinAction } from "./components/login/JoinForm";
-import { loader as logoutLoader } from "./components/login/Logout";
+import { action as logoutAction } from "./components/login/Logout";
 import { tokenLoader } from "./components/auth";
 import SocialLogin from "./components/login/SocialLogin";
 
+import SidebarLayout from "./components/mypage/SidebarLayout"
+import NewHostPage from "./components/mypage/NewHostPage";
+import Myinfo from "./components/mypage/Myinfo"
+
 const router = createBrowserRouter([
   {
+    //Header
     path: "/",
     element: <RoutLayout />,
     //errorElement: <ErrorPage />,
@@ -39,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: "logout",
-        loader: logoutLoader,
+        action: logoutAction,
       },
       {
         path: "join",
@@ -63,7 +68,22 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path : "mypage",
+        element : <SidebarLayout />,
+        children:[
+          {
+            index : true,
+            element : <Myinfo />
+          },
+          {
+            path : "newHost",
+            element : <NewHostPage />
+          }
+        ]
+      },
 
+      // Footer
       {
         path: "boards",
         children: [
@@ -73,7 +93,7 @@ const router = createBrowserRouter([
             loader: boardsLoader,
           },
           {
-            path: "new",
+            path: "newBoard",
             element: <NewBoardPage />,
             action: manipulateBoardAction,
           },

@@ -7,6 +7,7 @@ function RoutLayout() {
   const navigation = useNavigation();
   const token = useLoaderData();
   // const navigation = useNavigation();
+  console.log('RootLayout'+token);
 
   useEffect(() => {
     if (token === '') {

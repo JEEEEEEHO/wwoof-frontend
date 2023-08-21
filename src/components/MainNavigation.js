@@ -27,12 +27,14 @@ function MainNavigation() {
           )}
           {token && (
             <li>
-              <NavLink to="/">마이페이지</NavLink>
+              <NavLink to="mypage">마이페이지</NavLink>
             </li>
           )}
           {token && (
             <li>
-              <NavLink to="logout">로그아웃</NavLink>
+              <Form action="/logout" method="post">
+                <button className={classes.button}>로그아웃</button>
+              </Form>
             </li>
           )}
         </ul>

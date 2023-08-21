@@ -25,7 +25,7 @@ function BoardList({ boards }) {
         </ul>
       </div>
       <div>
-        <Link to="new">
+        <Link to="newBoard">
           <button type="button">글등록</button>
         </Link>
       </div>

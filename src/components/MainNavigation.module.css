@@ -14,7 +14,8 @@
   font-weight: bold;
 }
 
-.logo :active{
+.logo:active
+.logo:hover{
   color: white;
 }
 
@@ -30,7 +31,8 @@
   margin-left: 3rem;
 }
 
-.header a {
+.header a, 
+.header button {
   text-decoration: none;
   font-size: 1.5rem;
   color: rgb(129, 64, 3);
@@ -38,6 +40,14 @@
 
 .header a:hover,
 .header a:active,
-.header a.active {
+.header a.active
+.header button:hover,
+.header button:active,
+.header button.active {
   color: white;
+}
+
+.header button{
+  border: 0;
+  background-color: transparent;
 }
