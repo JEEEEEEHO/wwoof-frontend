@@ -24,6 +24,7 @@ import SocialLogin from "./components/login/SocialLogin";
 
 import SidebarLayout from "./components/mypage/SidebarLayout"
 import NewHostPage from "./components/mypage/NewHostPage";
+import {action as manipulateHostAction} from "./components/mypage/HostRegisterForm"
 import Myinfo from "./components/mypage/Myinfo"
 
 const router = createBrowserRouter([
@@ -55,6 +56,8 @@ const router = createBrowserRouter([
         path: "socialLogin",
         element: <SocialLogin />,
       },
+
+      // Host Search
       {
         path: "hostSearch",
         children: [
@@ -68,6 +71,8 @@ const router = createBrowserRouter([
           },
         ],
       },
+
+      // My Page
       {
         path : "mypage",
         element : <SidebarLayout />,
@@ -78,7 +83,8 @@ const router = createBrowserRouter([
           },
           {
             path : "newHost",
-            element : <NewHostPage />
+            element : <NewHostPage />,
+            action : manipulateHostAction
           }
         ]
       },

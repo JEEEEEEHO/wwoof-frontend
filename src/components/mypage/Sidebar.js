@@ -8,11 +8,11 @@ function Sidebar(){
                     <h3>김지호</h3>
                     <ul className="sidebarList">
                         <li className="sidebarListItem">
-                            <Link to="newHost">호스트신청</Link> 
-                            {/* 신청한사람은 정보보기 */}
+                            <Link to="">나의정보</Link>
                         </li>
                         <li className="sidebarListItem">
-                            <Link to="">나의정보</Link>
+                            <Link to="newHost">호스트신청</Link> 
+                            {/* 신청한사람은 정보보기 */}
                         </li>
                     </ul>
                 </div>
