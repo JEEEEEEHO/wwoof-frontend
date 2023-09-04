@@ -1,4 +1,3 @@
-
 const FileList = ({ fileList, setFileList }) => {
   const onClick = (name) => {
     setFileList(fileList.filter((f) => name !== f.name));

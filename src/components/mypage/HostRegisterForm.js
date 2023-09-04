@@ -1,13 +1,12 @@
 import { useState, useRef } from "react";
 import {
-  Form,
   useNavigate,
   useNavigation,
   json,
-  redirect,
 } from "react-router-dom";
 
 import FileList from "./FileList";
+import File from "./File";
 
 const MAX_COUNT = 5;
 
@@ -16,21 +15,30 @@ function HostRegisterForm({ method }) {
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
   const ref = useRef(null);
-
+  const refMainImg = useRef(null);
   function cancelHandler() {
     navigate("..");
   }
 
+  const [file, setFile] = useState("");
+  // 대표 이미지 입력
   const [fileList, setFileList] = useState([]);
   // 멀티파일 입력
   const [fileLimit, setFileLimit] = useState(false);
   // 파일 개수 제한
 
+  const handleMainImgChoose = (e) => {
+    e.preventDefault();
+    refMainImg.current && refMainImg.current.click();
+  };
+  const handleMainImgChange = (e) => {
+    setFile(e.target.files);
+  };
+
   const handleChoose = (e) => {
     e.preventDefault();
     ref.current && ref.current.click();
   };
-
   const handleChange = (e) => {
     const uploaded = [...fileList];
     // 이미 존재하는 파일들의 배열
@@ -59,43 +67,81 @@ function HostRegisterForm({ method }) {
     }
   };
 
-  const handleUpload = () =>{
-    console.log(fileList)
-    if(!fileList){
+  const handleUpload = async (e) => {
+    const getData = new FormData(e.target);
+    console.log(getData.get("mainImg"));
+
+    const HostData = {
+      shortintro: getData.get("shortintro"),
+      region: getData.get("region"),
+      age: getData.get("age"),
+      gender: getData.get("gender"),
+      farmsts: getData.get("farmsts"),
+      maxPpl: getData.get("maxPpl"),
+      intro: getData.get("intro"),
+      lat: getData.get("lat"),
+      lng: getData.get("lng"),
+    };
+
+    const formData = new FormData();
+    formData.append('file', getData.get("mainImg"));
+    formData.append("hostData", new Blob([JSON.stringify(HostData)], { type: "application/json" }))
+
+    let url = "http://localhost:8080/api/host/save";
+
+    if(method==='PUT'){
+      // 수정 
+    }
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': ' multipart/form-data',
+      },
+      body: formData,
+    })
+
+    if(response.state === 422){
+      return response;
+    }
+    if (!response.ok) {
+      throw json({ message: 'Could not save board.' }, { status: 500 });
+    }
+    uploadFiles(response.data);
+    // id를 전달함 
+  };
+
+  const uploadFiles = async (id) => {
+    let url = "http://localhost:8080/api/host/saveImg";
+    
+    if (!fileList) {
       return;
     }
-    const data= new FormData();
-    [...fileList].forEach((f)=>{
-      data.append('files', f);
-    })
-    uploadFiles(data);
-  }
+    const formData = new FormData();
+    [...fileList].forEach((f) => {
+      formData.append("files", f);
+    });
+    formData.append('hnum', id);
+    // 서버에서 받은 호스트 번호 
+    Array.from(formData).forEach((el) => console.log(el));
 
-
-  let url = "http://localhost:8080/api/host/saveImgs";
-
-  const uploadFiles = async data => {
-    Array.from(data).forEach(el=>
-      console.log(el));
-    
     const response = await fetch(url, {
-      method : 'POST',
+      method: method,
       headers: {
         "Content-Type": "multipart/form-data",
       },
-      body : data
+      body: formData,
     })
-    .then((res)=>res.json())
-    .then((data)=>console.log(data))
-    .catch((err)=>console.log(err));
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
 
-    if(!response.ok){
-      throw json({ message: 'Could not save imgs.' }, { status: 500 });
+    if (!response.ok) {
+      throw json({ message: "Could not save imgs." }, { status: 500 });
     }
   };
 
   return (
-    <Form method={method} encType="multipart/form-data">
+    <form onSubmit={handleUpload} method={method} encType="multipart/form-data">
       <label htmlFor="shortintro">농장이름</label>
       <input type="text" name="shortintro" id="shortintro" />
       <br />
@@ -145,76 +191,39 @@ function HostRegisterForm({ method }) {
       <br />
       <div>
         <label htmlFor="file">대표이미지</label>
-        <input type="file" name="mainImg" />
+        <button onClick={handleMainImgChoose}>choose file</button>
+        <input
+          type="file"
+          name="mainImg"
+          ref={refMainImg}
+          onChange={handleMainImgChange}
+          hidden
+        />
+        <File file={file} setFile={setFile} />
       </div>
       <div>
         <label htmlFor="files">이미지</label>
         <button onClick={handleChoose}>choose file</button>
-
         <input
           type="file"
           name="images"
           ref={ref}
-          multiple
-          hidden
           onChange={handleChange}
+          hidden
+          multiple
         />
         <FileList fileList={fileList} setFileList={setFileList} />
-        <button onClick={handleUpload} >파일 업로드</button>
       </div>
-
       <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>
           취소
         </button>
-        <button disabled={isSubmiting}>등록</button>
+        <button type="submit" disabled={isSubmiting}>
+          등록
+        </button>
       </div>
-    </Form>
+    </form>
   );
 }
 
 export default HostRegisterForm;
-
-export async function action({ request, params }) {
-  const method = request.method;
-  const data = await request.formData();
-
-  const HostData = {
-    shortintro: data.get("shortintro"),
-    region: data.get("region"),
-    age: data.get("age"),
-    gender: data.get("gender"),
-    farmsts: data.get("farmsts"),
-    maxPpl: data.get("maxPpl"),
-    intro: data.get("intro"),
-    lat: data.get("lat"),
-    lng: data.get("lng"),
-  };
-
-  const formData = new FormData();
-  formData.append(
-    "hostData",
-    new Blob([JSON.stringify(HostData)], { type: "application/json" })
-  );
-
-  // data.get("images").forEach((img) => {
-  //   formData.append("files", img); // 동일한 key 값으로 계속 담아줌
-  // });
-
-  let url = "http://localhost:8080/api/host/save";
-
-  const response = await fetch(url, {
-    method: method,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    body: formData,
-  });
-
-  console.log(response);
-
-  if (!response.ok) {
-    throw json({ message: "Could not save board." }, { status: 500 });
-  }
-  return redirect("/");
-}
