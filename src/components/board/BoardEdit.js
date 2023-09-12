@@ -1,7 +1,7 @@
 import { useRouteLoaderData } from "react-router-dom";
 import BoardForm from "./BoardForm";
 
-function BoardEditPage() {
+function BoardEdit() {
 
     const data = useRouteLoaderData("board-detail");
     return(
@@ -9,5 +9,5 @@ function BoardEditPage() {
     )
 }
 
-export default BoardEditPage;
+export default BoardEdit;
 

@@ -3,6 +3,7 @@ import {
   useNavigate,
   useNavigation,
   json,
+  redirect
 } from "react-router-dom";
 
 import FileList from "./FileList";
@@ -10,7 +11,7 @@ import File from "./File";
 
 const MAX_COUNT = 5;
 
-function HostRegisterForm({ method }) {
+function HostRegisterForm({method, host}) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
@@ -68,8 +69,8 @@ function HostRegisterForm({ method }) {
   };
 
   const handleUpload = async (e) => {
+    e.preventDefault();
     const getData = new FormData(e.target);
-    console.log(getData.get("mainImg"));
 
     const HostData = {
       shortintro: getData.get("shortintro"),
@@ -82,23 +83,18 @@ function HostRegisterForm({ method }) {
       lat: getData.get("lat"),
       lng: getData.get("lng"),
     };
-
+    
+ 
+    
     const formData = new FormData();
     formData.append('file', getData.get("mainImg"));
-    formData.append("hostData", new Blob([JSON.stringify(HostData)], { type: "application/json" }))
-
-    let url = "http://localhost:8080/api/host/save";
-
-    if(method==='PUT'){
-      // 수정 
-    }
+    formData.append('hostData', new Blob([JSON.stringify(HostData)], { type: "application/json" }))
+    
+    let url = 'http://localhost:8080/api/host/save';
     const response = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': ' multipart/form-data',
-      },
+      method: 'POST',
       body: formData,
-    })
+    });
 
     if(response.state === 422){
       return response;
@@ -106,80 +102,77 @@ function HostRegisterForm({ method }) {
     if (!response.ok) {
       throw json({ message: 'Could not save board.' }, { status: 500 });
     }
-    uploadFiles(response.data);
+    response.json().then(res =>  uploadFiles(`${res}`) );
     // id를 전달함 
   };
 
   const uploadFiles = async (id) => {
-    let url = "http://localhost:8080/api/host/saveImg";
-    
     if (!fileList) {
       return;
     }
     const formData = new FormData();
     [...fileList].forEach((f) => {
-      formData.append("files", f);
+      formData.append('files', f); // 배열로 보내야함, FileList로 보내면 객체로 보내짐 
     });
     formData.append('hnum', id);
     // 서버에서 받은 호스트 번호 
-    Array.from(formData).forEach((el) => console.log(el));
-
+    
+    let url = "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      method: 'POST',
       body: formData,
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
 
     if (!response.ok) {
       throw json({ message: "Could not save imgs." }, { status: 500 });
     }
+    if (!response.ok) {
+      throw json({ message: 'Could not save board.' }, { status: 500 });
+    }
+    return redirect('/boards');
   };
 
   return (
-    <form onSubmit={handleUpload} method={method} encType="multipart/form-data">
+    <form onSubmit={handleUpload} encType="multipart/form-data">
       <label htmlFor="shortintro">농장이름</label>
-      <input type="text" name="shortintro" id="shortintro" />
+      <input type="text" name="shortintro" id="shortintro" defaultValue={host ? host.shortintro : ""} />
       <br />
 
       <label htmlFor="region">지역</label>
-      <input type="radio" name="region" id="region" value="1" />
+
+      <input type="radio" name="region" id="region" value="1" checked={this.host.region===1} />
       <label>경기도</label>
-      <input type="radio" name="region" id="region" value="2" />
+      <input type="radio" name="region" id="region" value="2" checked={this.host.region===2} />
       <label>충청도</label>
       <br />
 
       <label htmlFor="age">나이</label>
-      <input type="radio" name="age" id="age" value="1" />
+      <input type="radio" name="age" id="age" value="1" checked={this.host.age===1} />
       <label>20</label>
-      <input type="radio" name="age" id="age" value="2" />
+      <input type="radio" name="age" id="age" value="2" checked={this.host.age===2} />
       <label>30</label>
       <br />
 
       <label htmlFor="gender">성별</label>
-      <input type="radio" name="gender" id="gender" value="1" />
+      <input type="radio" name="gender" id="gender" value="1" checked={this.host.gender===1} />
       <label>여</label>
-      <input type="radio" name="gender" id="gender" value="2" />
+      <input type="radio" name="gender" id="gender" value="2" checked={this.host.gender===2} />
       <label>남</label>
       <br />
 
       <label htmlFor="farmsts">농법</label>
-      <input type="radio" name="farmsts" id="farmsts" value="1" />
+      <input type="radio" name="farmsts" id="farmsts" value="1" checked={this.host.farmsts===1} />
       <label>친환경</label>
-      <input type="radio" name="farmsts" id="farmsts" value="2" />
+      <input type="radio" name="farmsts" id="farmsts" value="2" checked={this.host.farmsts===2} />
       <label>유기농</label>
       <br />
 
       <label htmlFor="maxPpl">최대인원</label>
-      <input type="text" name="maxPpl" id="maxPpl" />
+      <input type="text" name="maxPpl" id="maxPpl" defaultValue={host ? host.maxPpl : ""} />
       <br />
 
       <label htmlFor="intro">소개</label>
-      <textarea name="intro"></textarea>
+      <textarea name="intro"  defaultValue={host ? host.intro : ""} ></textarea>
       <br />
 
       <label htmlFor="lat">위도</label>
@@ -199,7 +192,7 @@ function HostRegisterForm({ method }) {
           onChange={handleMainImgChange}
           hidden
         />
-        <File file={file} setFile={setFile} />
+        <File file={file} setFile={setFile} uploadedFile={host.hostMainImg} />
       </div>
       <div>
         <label htmlFor="files">이미지</label>
@@ -212,7 +205,7 @@ function HostRegisterForm({ method }) {
           hidden
           multiple
         />
-        <FileList fileList={fileList} setFileList={setFileList} />
+        <FileList fileList={fileList} setFileList={setFileList}  />
       </div>
       <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>

@@ -1,7 +1,7 @@
 import BoardForm from "./BoardForm"
 
-function NewBoardPage(){
+function NewBoard(){
     return <BoardForm method="POST" />
 }
 
-export default NewBoardPage;
+export default NewBoard;

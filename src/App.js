@@ -4,16 +4,15 @@ import Homepage from "./components/pages/Homepage";
 import RoutLayout from "./components/RoutLayout";
 import ErrorPage from "./components/pages/Error";
 
-import BoardsPage, { loader as boardsLoader } from "./components/board/Board";
+import Board, { loader as boardsLoader } from "./components/board/Board";
 import BoardDetailPage, {
   loader as boardDetailLoader,
   action as deleteBoardAction,
-} from "./components/board/BoardDetailPage";
-import NewBoardPage from "./components/board/NewBoardPage";
-import BoardEditPage from "./components/board/BoardEditPage";
+} from "./components/board/BoardDetail";
+import NewBoard from "./components/board/NewBoard";
+import BoardEdit from "./components/board/BoardEdit";
 import { action as manipulateBoardAction } from "./components/board/BoardForm";
 import HostSearch from "./components/host/HostSearch";
-import HostDetailPage from "./components/host/HostDetailPage";
 import Login from "./components/login/Login";
 import { action as signinAction } from "./components/login/LoginForm";
 import Join from "./components/login/Join";
@@ -23,9 +22,9 @@ import { tokenLoader } from "./components/auth";
 import SocialLogin from "./components/login/SocialLogin";
 
 import SidebarLayout from "./components/mypage/SidebarLayout"
-import NewHostPage from "./components/mypage/NewHostPage";
 import Myinfo from "./components/mypage/Myinfo"
-
+import MyinfoHost, { loader as hostLoader }  from "./components/mypage/MyinfoHost"; 
+import HostRegisterForm from "./components/mypage/HostRegisterForm"
 const router = createBrowserRouter([
   {
     //Header
@@ -58,16 +57,13 @@ const router = createBrowserRouter([
 
       // Host Search
       {
-        path: "hostSearch",
+        path: "hosts",
         children: [
           {
             index: true,
             element: <HostSearch />,
           },
-          {
-            path: ":hostId",
-            children: [{ index: true, element: <HostDetailPage /> }],
-          },
+          
         ],
       },
 
@@ -81,8 +77,18 @@ const router = createBrowserRouter([
             element : <Myinfo />
           },
           {
-            path : "newHost",
-            element : <NewHostPage />,
+            path : "myinfoHost",
+            children :[
+              {
+                index : true,
+                element : <MyinfoHost />,
+                loader : hostLoader,
+              }, 
+              {
+                path : "newHost",
+                element : <HostRegisterForm />,
+              }, 
+            ]
           }
         ]
       },
@@ -93,12 +99,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <BoardsPage />,
+            element: <Board />,
             loader: boardsLoader,
           },
           {
             path: "newBoard",
-            element: <NewBoardPage />,
+            element: <NewBoard />,
             action: manipulateBoardAction,
           },
           {
@@ -113,7 +119,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "edit",
-                element: <BoardEditPage />,
+                element: <BoardEdit />,
                 action: manipulateBoardAction,
               },
             ],

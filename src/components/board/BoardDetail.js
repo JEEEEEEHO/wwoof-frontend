@@ -1,7 +1,7 @@
 import { json, useRouteLoaderData, redirect } from "react-router-dom";
 import BoardItem from './BoardItem';
 
-function BoardDetailPage() {
+function BoardDetail() {
     const data = useRouteLoaderData("board-detail"); 
     // 1. App 에서 보낸 loader의 값을 id로 읽어서 사용함 
     // 3. loader의 실행 결과로써 data 
@@ -10,7 +10,7 @@ function BoardDetailPage() {
 
 }
 
-export default BoardDetailPage;
+export default BoardDetail;
 
 export async function loader({ request, params }) {
   const id = params.boardNum; 
