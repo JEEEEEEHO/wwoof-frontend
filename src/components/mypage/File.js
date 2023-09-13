@@ -1,4 +1,4 @@
-const File = ({ file, setFile, uploadedFile}) => {
+const File = ({ file, setFile, uploadedFile }) => {
   const onClick = (name) => {
     setFile("");
   };
@@ -12,14 +12,15 @@ const File = ({ file, setFile, uploadedFile}) => {
     );
   }
 
-  if(uploadedFile){
+  if (uploadedFile) {
     <div key={uploadedFile.pid}>
-    <img
-        src={process.env.REACT_APP_API_URL+"/images/"+uploadedFile.filename}
-        alt={"img"+uploadedFile.pid}
-        style={{width:"200px", height:"150px"}}
-    />
-</div>
+      <img
+        src={"http://localhost:8080/images/" + uploadedFile.filename}
+        alt={"img" + uploadedFile.pid}
+        style={{ width: "200px", height: "150px" }}
+      />
+      <button onClick={() => onClick(uploadedFile.pid)}>X</button>
+    </div>;
   }
 };
 export default File;

@@ -1,11 +1,12 @@
-const FileList = ({ fileList, setFileList }) => {
+const FileList = ({ fileList, setFileList, uploadFiles }) => {
   const onClick = (name) => {
     setFileList(fileList.filter((f) => name !== f.name));
   };
 
   return (
     <div>
-      {fileList &&
+      {fileList && 
+        uploadFiles.
         fileList.map((f) => {
           const src = URL.createObjectURL(f);
           return (

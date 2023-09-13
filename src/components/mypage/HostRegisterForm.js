@@ -205,7 +205,7 @@ function HostRegisterForm({method, host}) {
           hidden
           multiple
         />
-        <FileList fileList={fileList} setFileList={setFileList}  />
+        <FileList fileList={fileList} setFileList={setFileList} uploadFiles={host.hostImg}  />
       </div>
       <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>

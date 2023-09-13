@@ -40,7 +40,7 @@ async function loadHost() {
   if (accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer " + accessToken);
   }
-  const response = await fetch("http://localhost:8080/api/host/detail", {
+  const response = await fetch("http://localhost:8080/api/host/saveInfo", {
     method: "GET",
     headers: headers,
   });
