@@ -188,6 +188,7 @@ function HostRegisterForm({method, host}) {
         <input
           type="file"
           name="mainImg"
+          accept=".jpg, .png"
           ref={refMainImg}
           onChange={handleMainImgChange}
           hidden
@@ -200,6 +201,7 @@ function HostRegisterForm({method, host}) {
         <input
           type="file"
           name="images"
+          accept=".jpg, .png"
           ref={ref}
           onChange={handleChange}
           hidden
