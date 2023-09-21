@@ -23,8 +23,12 @@ function HostRegisterForm({method, host}) {
 
   const [file, setFile] = useState("");
   // 대표 이미지 입력
+  const [deleteFile, setdeleteFile] = useState("");
+  // 대표 이미지 삭제 (String)
   const [fileList, setFileList] = useState([]);
   // 멀티파일 입력
+  const [deleteFileList, setdeleteFileList] = useState([]);
+  // 멀티파일 삭제 (String Array)
   const [fileLimit, setFileLimit] = useState(false);
   // 파일 개수 제한
 
@@ -45,6 +49,9 @@ function HostRegisterForm({method, host}) {
     // 이미 존재하는 파일들의 배열
     let limitExceeded = false;
     // 파일제한 개수
+    const hostFileCnt = host ? host.hostMainImg.length : 0;
+    // 서버에 등록되어 있었던 이미지의 개수 
+
     const files = Array.from(e.target.files);
     files.some((newFile) => {
       if (uploaded.findIndex((f) => f.name === newFile.name) === -1) {
@@ -55,12 +62,13 @@ function HostRegisterForm({method, host}) {
           setFileLimit(true);
           // 파일 제한
         }
-        if (uploaded.length > MAX_COUNT) {
+        if (uploaded.length + hostFileCnt > MAX_COUNT) {
           alert("파일제한초과");
           setFileLimit(false);
           limitExceeded = true;
           return true;
-        }
+        } 
+        
       }
     });
     if (!limitExceeded) {
@@ -193,7 +201,14 @@ function HostRegisterForm({method, host}) {
           onChange={handleMainImgChange}
           hidden
         />
-        <File file={file} setFile={setFile} uploadedFile={host.hostMainImg} />
+        <input
+          type="text"
+          name="deleteMainImg"
+          value={deleteFile}
+          hidden
+        />
+        <File file={file} setFile={setFile} uploadedFile={host.hostMainImg} setdeleteFile={setdeleteFile} />
+
       </div>
       <div>
         <label htmlFor="files">이미지</label>
