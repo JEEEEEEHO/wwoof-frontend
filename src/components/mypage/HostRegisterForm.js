@@ -96,9 +96,10 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
       new Blob([JSON.stringify(HostData)], { type: "application/json" })
     );
 
-    let url = "http://localhost:8080/api/host/save";
+    // update or insert
+    let url = method === "PUT" ? "update" :  "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
-      method: "POST",
+      method: method,
       body: formData,
     });
 
@@ -123,7 +124,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
       formData.append("files", f); 
     });
     
-     // delete 된 파일들의 이름이 저장되어있는 파일들 
+    // delete 된 파일들의 이름이 저장되어있는 파일들 
     if(method==="PUT" && deleteFileList){
       deleteFileList.forEach((f)=>{
         formData.append("deleteFiles", f)
@@ -134,19 +135,16 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
     formData.append("hnum", id);
 
     // update or insert
-    let url = method ? "" :  "http://localhost:8080/api/host/saveImg";
+    let url = method === "PUT" ? "update" :  "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
-      method: method ? method : "POST",
+      method: method,
       body: formData,
     });
 
     if (!response.ok) {
       throw json({ message: "Could not save imgs." }, { status: 500 });
     }
-    if (!response.ok) {
-      throw json({ message: "Could not save board." }, { status: 500 });
-    }
-    return redirect("/boards");
+    return redirect("/myinfoHost");
   };
 
   return (
@@ -165,7 +163,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="region"
         id="region"
         value="1"
-        checked={this.host.region === 1}
+        checked={host && this.host.region === 1}
       />
       <label>경기도</label>
       <input
@@ -173,7 +171,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="region"
         id="region"
         value="2"
-        checked={this.host.region === 2}
+        checked={host && this.host.region === 2}
       />
       <label>충청도</label>
       <br />
@@ -183,7 +181,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="age"
         id="age"
         value="1"
-        checked={this.host.age === 1}
+        checked={host && this.host.age === 1}
       />
       <label>20</label>
       <input
@@ -191,7 +189,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="age"
         id="age"
         value="2"
-        checked={this.host.age === 2}
+        checked={host && this.host.age === 2}
       />
       <label>30</label>
       <br />
@@ -201,7 +199,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="gender"
         id="gender"
         value="1"
-        checked={this.host.gender === 1}
+        checked={host && this.host.gender === 1}
       />
       <label>여</label>
       <input
@@ -209,7 +207,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="gender"
         id="gender"
         value="2"
-        checked={this.host.gender === 2}
+        checked={host && this.host.gender === 2}
       />
       <label>남</label>
       <br />
@@ -219,7 +217,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="farmsts"
         id="farmsts"
         value="1"
-        checked={this.host.farmsts === 1}
+        checked={host && this.host.farmsts === 1}
       />
       <label>친환경</label>
       <input
@@ -227,7 +225,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="farmsts"
         id="farmsts"
         value="2"
-        checked={this.host.farmsts === 2}
+        checked={host && this.host.farmsts === 2}
       />
       <label>유기농</label>
       <br />
@@ -262,7 +260,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         <File
           file={file}
           setFile={setFile}
-          uploadedFile={host.hostMainImg}
+          uploadedFile={host ? host.hostMainImg : ""}
           setdeleteFile={setdeleteFile}
         />
       </div>
@@ -281,7 +279,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         <FileList
           fileList={fileList}
           setFileList={setFileList}
-          uploadedFiles={host.hostImg}
+          uploadedFiles={host ? host.hostImg : ""}
           deleteFileList= {deleteFileList}
           setdeleteFileList={setdeleteFileList}
         />
