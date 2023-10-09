@@ -16,6 +16,7 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
 
   // 기존에 업로드 되었던 파일을 삭제하는 경우
   const onClickDelte = (name) => {
+    console.log(name);
     uploadedFile = "";
     setdeleteFile(name);
   };

@@ -3,7 +3,7 @@ import HostRegisterForm from "./HostRegisterForm";
 
 function MyinfoHost() {
   const host = useLoaderData();
-  console.log(host);
+  
   // loader를 이용해서 가져온 response 정보
   if (host.user === null || host.user === undefined) {
     return <HostRegisterForm method="POST" />; // insert
@@ -20,7 +20,6 @@ export async function loader() {
   let headers = new Headers({
     "Content-Type": "application/json",
   });
-
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
   if (accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer " + accessToken);
