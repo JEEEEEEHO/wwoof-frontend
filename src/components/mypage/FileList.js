@@ -39,7 +39,6 @@ const FileList = ({
     <div>
       {screenImgs &&
         screenImgs.map((f) => {
-          console.log(f);
           return (
             <div key={f.filename}>
               <img src={f.fileImgPath} alt={f.filename} width="100" height="100" />
@@ -51,6 +50,7 @@ const FileList = ({
       {fileList &&
         fileList.map((f) => {
           const src = URL.createObjectURL(f);
+           // 이미지 미리보기 
           return (
             <div key={f.name}>
               <img src={src} alt="error" width="100" height="100" />

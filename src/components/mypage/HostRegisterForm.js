@@ -6,8 +6,8 @@ import File from "./File";
 
 const MAX_COUNT = 5;
 
-function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재함 
-  console.log(host);
+function HostRegisterForm({ method, host }) {
+  // 수정일 때 method가 존재함
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmiting = navigation.state === "submitting";
@@ -41,6 +41,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
     e.preventDefault();
     ref.current && ref.current.click();
   };
+
   const handleChange = (e) => {
     // 업로드하는 파일들의 배열
     const uploaded = [...fileList];
@@ -52,7 +53,6 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
 
     const files = Array.from(e.target.files);
     files.some((newFile) => {
-      
       // 업로드된 파일들의 이름과 새로운 파일의 이름을 비교해서 다른 경우
       if (uploaded.findIndex((f) => f.name === newFile.name) === -1) {
         // 새로운 파일을 업로드 함
@@ -75,7 +75,6 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
   };
 
   const handleUpload = async (e) => {
-    
     e.preventDefault();
     const getData = new FormData(e.target);
     const deleteMainImg = deleteFile ? deleteFile : ""; // 메인이미지가 삭제된 경우
@@ -101,14 +100,15 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
     );
 
     let headers = new Headers();
-  
+
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     if (accessToken && accessToken !== null) {
       headers.append("Authorization", "Bearer " + accessToken);
     }
 
     // update or insert
-    let url = method === "PUT" ? "update" :  "http://localhost:8080/api/host/save";
+    let url =
+      method === "PUT" ? "update" : "http://localhost:8080/api/host/save";
     const response = await fetch(url, {
       method: method,
       headers: headers,
@@ -130,24 +130,25 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
       return;
     }
     const formData = new FormData();
-    
+
     // 배열로 보내야함, FileList로 보내면 객체로 보내짐
     [...fileList].forEach((f) => {
-      formData.append("files", f); 
+      formData.append("files", f);
     });
-    
-    // delete 된 파일들의 이름이 저장되어있는 파일들 
-    if(method==="PUT" && deleteFileList){
-      deleteFileList.forEach((f)=>{
-        formData.append("deleteFiles", f)
-      })
+
+    // delete 된 파일들의 이름이 저장되어있는 파일들
+    if (method === "PUT" && deleteFileList) {
+      deleteFileList.forEach((f) => {
+        formData.append("deleteFiles", f);
+      });
     }
 
     // 서버에서 받은 호스트 번호
     formData.append("hnum", id);
 
     // update or insert
-    let url = method === "PUT" ? "update" :  "http://localhost:8080/api/host/saveImg";
+    let url =
+      method === "PUT" ? "update" : "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
       method: method,
       body: formData,
@@ -176,7 +177,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="region"
         id="region"
         value="1"
-        checked={host && host.region === "1"}
+        defaultChecked={host && host.region === "1"}
       />
       <label>경기도</label>
       <input
@@ -184,7 +185,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="region"
         id="region"
         value="2"
-        checked={host && host.region === "2"}
+        defaultChecked={host && host.region === "2"}
       />
       <label>충청도</label>
       <br />
@@ -194,7 +195,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="age"
         id="age"
         value="1"
-        checked={host && host.age === "1"}
+        defaultChecked={host && host.age === "1"}
       />
       <label>20</label>
       <input
@@ -202,7 +203,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="age"
         id="age"
         value="2"
-        checked={host && host.age === "2"}
+        defaultChecked={host && host.age === "2"}
       />
       <label>30</label>
       <br />
@@ -212,7 +213,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="gender"
         id="gender"
         value="1"
-        checked={host && host.gender === "1"}
+        defaultChecked={host && host.gender === "1"}
       />
       <label>여</label>
       <input
@@ -220,7 +221,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="gender"
         id="gender"
         value="2"
-        checked={host && host.gender === "2"}
+        defaultChecked={host && host.gender === "2"}
       />
       <label>남</label>
       <br />
@@ -230,7 +231,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="farmsts"
         id="farmsts"
         value="1"
-        checked={host && host.farmsts === "1"}
+        defaultChecked={host && host.farmsts === "1"}
       />
       <label>친환경</label>
       <input
@@ -238,7 +239,7 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
         name="farmsts"
         id="farmsts"
         value="2"
-        checked={host && host.farmsts === "2"}
+        defaultChecked={host && host.farmsts === "2"}
       />
       <label>유기농</label>
       <br />
@@ -294,11 +295,11 @@ function HostRegisterForm({ method, host }) { // 수정일 때 method가 존재�
           setFileList={setFileList}
           uploadedFiles={host ? host.hostImg : ""}
           setdeleteFileList={setdeleteFileList}
-          uploadedImgsCnt = {hostFileCnt}
-          setHostFileCnt = {setHostFileCnt}
+          uploadedImgsCnt={hostFileCnt}
+          setHostFileCnt={setHostFileCnt}
         />
       </div>
-      
+
       <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>
           취소
