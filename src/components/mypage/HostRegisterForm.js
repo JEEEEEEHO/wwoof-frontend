@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, useNavigation, json, redirect } from "react-router-dom";
+import AddressFind from "react-daum-postcode";
 
 import FileList from "./FileList";
 import File from "./File";
@@ -79,6 +80,8 @@ function HostRegisterForm({ method, host }) {
     const getData = new FormData(e.target);
     const deleteMainImg = deleteFile ? deleteFile : ""; // 메인이미지가 삭제된 경우
 
+    const formData = new FormData();
+
     const HostData = {
       shortintro: getData.get("shortintro"),
       deleteMainImg: deleteMainImg,
@@ -92,7 +95,6 @@ function HostRegisterForm({ method, host }) {
       lng: getData.get("lng"),
     };
 
-    const formData = new FormData();
     formData.append("file", getData.get("mainImg"));
     formData.append(
       "hostData",
@@ -254,11 +256,22 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
+      <AddressFind style={postCodeStyle} onComplete={onCompletePost} />
       <label htmlFor="lat">위도</label>
-      <input type="text" name="lat" id="lat" />
+      <input
+        type="text"
+        name="lat"
+        id="lat"
+        defaultValue={host ? host.lat : ""}
+      />
       <br />
       <label htmlFor="lng">경도</label>
-      <input type="text" name="lng" id="lng" />
+      <input
+        type="text"
+        name="lng"
+        id="lng"
+        defaultValue={host ? host.lng : ""}
+      />
       <br />
       <div>
         <label htmlFor="file">대표이미지</label>

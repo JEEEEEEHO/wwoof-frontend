@@ -37,9 +37,10 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
     return (
       <div key={screenImg.pid}>
         <img
-          src={"http://loaclhost:8080/image/" + screenImg.pid}
-          alt={"img" + screenImg.filename}
+          src={screenImg.fileUri}
+          alt={screenImg.filename}
           style={{ width: "200px", height: "150px" }}
+         
         />
         <button onClick={() => onClickDelte(screenImg.filename)}>X</button>
       </div>

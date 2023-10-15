@@ -41,7 +41,7 @@ const FileList = ({
         screenImgs.map((f) => {
           return (
             <div key={f.filename}>
-              <img src={f.fileImgPath} alt={f.filename} width="100" height="100" />
+              <img src={f.fileUri} alt={f.filename} width="100" height="100" />
               <button onClick={() => onClickDelte(f.filename)}>X</button>
             </div>
           );
