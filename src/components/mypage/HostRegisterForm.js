@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { useNavigate, useNavigation, json, redirect } from "react-router-dom";
-import AddressFind from "react-daum-postcode";
+
 
 import FileList from "./FileList";
 import File from "./File";
+import AddressFind from "./AddressFind";
 
 const MAX_COUNT = 5;
 
@@ -29,6 +30,11 @@ function HostRegisterForm({ method, host }) {
   // 파일 개수 제한
   const [fileLimit, setFileLimit] = useState(false);
   const [hostFileCnt, setHostFileCnt] = useState(0);
+  // 카카오 주소 
+  const [inputAddress, setInputAddress] = useState({});
+  const handlePost = (data) => {
+    setInputAddress(data.content)
+  }
 
   const handleMainImgChoose = (e) => {
     e.preventDefault();
@@ -256,7 +262,7 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
-      <AddressFind style={postCodeStyle} onComplete={onCompletePost} />
+      <AddressFind handlePost={handlePost} />
       <label htmlFor="lat">위도</label>
       <input
         type="text"
