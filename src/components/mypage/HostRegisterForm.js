@@ -31,11 +31,8 @@ function HostRegisterForm({ method, host }) {
   const [fileLimit, setFileLimit] = useState(false);
   const [hostFileCnt, setHostFileCnt] = useState(0);
   // 카카오 주소 
-  const [inputAddress, setInputAddress] = useState({});
-  const handlePost = (data) => {
-    setInputAddress(data.content)
-  }
-
+  const [inputAddress, setInputAddress] = useState("");
+ 
   const handleMainImgChoose = (e) => {
     e.preventDefault();
     refMainImg.current && refMainImg.current.click();
@@ -262,7 +259,14 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
-      <AddressFind handlePost={handlePost} />
+      <AddressFind setInputAddress={setInputAddress} />
+      <label htmlFor="address">주소</label>
+      <input
+        type="text"
+        name="address"
+        id="address"
+        defaultValue={inputAddress ? inputAddress : ""}
+      />
       <label htmlFor="lat">위도</label>
       <input
         type="text"

@@ -1,48 +1,33 @@
-import DaumPostcode from "react-daum-postcode";
+import { useRef } from "react";
+import { useDaumPostcodePopup } from 'react-daum-postcode';
  
 const AddressFind = (props) => {
-	// 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
-    const {handlePost} = props;
-    const handlePostCode = (data) => {
-        let fullAddress = data.address;
-        let extraAddress = ''; 
-        
-        if (data.addressType === 'R') {
-          if (data.bname !== '') {
-            extraAddress += data.bname;
-          }
-          if (data.buildingName !== '') {
-            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
-          }
-          fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-        }
-        console.log(data)
-        console.log(fullAddress)
-        console.log(data.zonecode)
-        props.onAddData(data);
-        
-    }
-    
-    handlePost(props);
+  const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+  const open = useDaumPostcodePopup(scriptUrl);
+  const setInputAddress = props.setInputAddress;
 
-    const postCodeStyle = {
-        display: "block",
-        position: "absolute",
-        top: '50%',
-        left: '50%',
-        transform:'translate(-50%,-50%)',
-        width: "600px",
-        height: "600px",
-        padding: "7px",
-        border: "2px solid #666"
-      };
- 
-    return(
-        <div>
-            <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} /> 
-            <button type='button' onClick={() => {props.onClose()}} className='postCode_btn'>입력</button>
-        </div>
-    )
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = ''; //추가될 주소
+    let townAddress = '';
+    //let localAddress = data.sido + ' ' + data.sigungu; //지역주소(시, 도 + 시, 군, 구)
+    if (data.addressType === 'R') { //주소타입이 도로명주소일 경우
+      if (data.bname !== '') {
+        extraAddress += data.bname; //법정동, 법정리
+      }
+      if (data.buildingName !== '') { //건물명
+        extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+      }
+      townAddress =  fullAddress += (extraAddress !== '' ? `(${extraAddress})` : '');
+    }
+    setInputAddress(townAddress);
+  }
+  //클릭 시 발생할 이벤트
+  const handleClick = () => {
+    //주소검색이 완료되고, 결과 주소를 클릭 시 해당 함수 수행
+  	open({onComplete: handleComplete});
+  }
+  return <button type="button" onClick={handleClick}>주소찾기</button>
 }
  
 export default AddressFind;
