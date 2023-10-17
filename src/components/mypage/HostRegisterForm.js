@@ -32,6 +32,10 @@ function HostRegisterForm({ method, host }) {
   const [hostFileCnt, setHostFileCnt] = useState(0);
   // 카카오 주소 
   const [inputAddress, setInputAddress] = useState("");
+  // 위도 
+  const [lat, setLat] = useState("");
+  // 경도 
+  const [lng, setLng] = useState("");
  
   const handleMainImgChoose = (e) => {
     e.preventDefault();
@@ -94,6 +98,7 @@ function HostRegisterForm({ method, host }) {
       farmsts: getData.get("farmsts"),
       maxPpl: getData.get("maxPpl"),
       intro: getData.get("intro"),
+      address : getData.get("address"),
       lat: getData.get("lat"),
       lng: getData.get("lng"),
     };
@@ -259,20 +264,20 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
-      <AddressFind setInputAddress={setInputAddress} />
+      <AddressFind setInputAddress={setInputAddress} setLat={setLat} setLng={setLng} />
       <label htmlFor="address">주소</label>
       <input
         type="text"
         name="address"
         id="address"
-        defaultValue={inputAddress ? inputAddress : ""}
+        defaultValue={host ? host.inputAddress : inputAddress}
       />
       <label htmlFor="lat">위도</label>
       <input
         type="text"
         name="lat"
         id="lat"
-        defaultValue={host ? host.lat : ""}
+        defaultValue={host ? host.lat : lat}
       />
       <br />
       <label htmlFor="lng">경도</label>
@@ -280,7 +285,7 @@ function HostRegisterForm({ method, host }) {
         type="text"
         name="lng"
         id="lng"
-        defaultValue={host ? host.lng : ""}
+        defaultValue={host ? host.lng : lng}
       />
       <br />
       <div>
