@@ -5,11 +5,13 @@ const AddressFind = (props) => {
   const setInputAddress = props.setInputAddress;
   const setLat = props.setLat;
   const setLng = props.setLng;
-  
+  const apiKey = '6da7c37a54a54b5a4e25bc33459da757';
   
   useEffect(() => {
     const script = document.createElement("script");
-    script.text = `//dapi.kakao.com/v2/maps/sdk.js?appkey=6da7c37a54a54b5a4e25bc33459da757&libraries=services,clusterer&autoload=false`;
+    script.async = true;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services,clusterer&autoload=false`;
+    document.head.appendChild(script);
   }, []);
 
   const scriptUrl =
