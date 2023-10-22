@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useNavigation, json, redirect } from "react-router-dom";
 
 
@@ -19,17 +19,27 @@ function HostRegisterForm({ method, host }) {
     navigate("..");
   }
 
+  // 호스트 정보 
+  const [hostNum, setHostNum] = useState("");
+  useEffect(()=>{
+    host && setHostNum(host.hnum);
+  },[]);
+
+
   // 대표 이미지 입력
   const [file, setFile] = useState("");
   // 대표 이미지 삭제 (String)
   const [deleteFile, setdeleteFile] = useState("");
+
   // 멀티파일 입력
   const [fileList, setFileList] = useState([]);
   // 멀티파일 삭제 (String Array)
   const [deleteFileList, setdeleteFileList] = useState([]);
+
   // 파일 개수 제한
   const [fileLimit, setFileLimit] = useState(false);
   const [hostFileCnt, setHostFileCnt] = useState(0);
+
   // 카카오 주소 
   const [inputAddress, setInputAddress] = useState("");
   // 위도 
@@ -91,7 +101,6 @@ function HostRegisterForm({ method, host }) {
 
     const HostData = {
       shortintro: getData.get("shortintro"),
-      deleteMainImg: deleteMainImg,
       region: getData.get("region"),
       age: getData.get("age"),
       gender: getData.get("gender"),
@@ -101,6 +110,8 @@ function HostRegisterForm({ method, host }) {
       address : getData.get("address"),
       lat: getData.get("lat"),
       lng: getData.get("lng"),
+      deleteMainImg: deleteMainImg,
+      hostNum : hostNum
     };
 
     formData.append("file", getData.get("mainImg"));
@@ -118,7 +129,7 @@ function HostRegisterForm({ method, host }) {
 
     // update or insert
     let url =
-      method === "PUT" ? "update" : "http://localhost:8080/api/host/save";
+      method === "PUT" ? "http://localhost:8080/api/host/update" : "http://localhost:8080/api/host/save";
     const response = await fetch(url, {
       method: method,
       headers: headers,
@@ -158,7 +169,7 @@ function HostRegisterForm({ method, host }) {
 
     // update or insert
     let url =
-      method === "PUT" ? "update" : "http://localhost:8080/api/host/saveImg";
+      method === "PUT" ? "http://localhost:8080/api/host/updateImg" : "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
       method: method,
       body: formData,
@@ -332,9 +343,12 @@ function HostRegisterForm({ method, host }) {
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>
           취소
         </button>
-        <button type="submit" disabled={isSubmiting}>
-          등록
-        </button>
+        {host&&<button type="submit" disabled={isSubmiting}>
+          수정
+        </button>}
+        {!host&&<button type="submit" disabled={isSubmiting}>
+          저장
+        </button>}
       </div>
     </form>
   );

@@ -8,32 +8,36 @@ const FileList = ({
   hostFileCnt,
   setHostFileCnt
 }) => {
-  const [screenImgs, setScreenImgs] = useState([]);
   // (화면 보여주기용)
   // 서버에 저장되어있는 파일들의 이름을 저장한 배열 화면에 보여줌
   // delete 할 시에 삭제 되어 보여주기 위함
+  const [screenImgs, setScreenImgs] = useState([]);
 
-  const deleteList = [];
+  // 이미 서버에 저장된 파일들을 담아줌 
+  useEffect(()=>{
+    uploadedFiles && setScreenImgs([...uploadedFiles])
+  },[]);
+
   // 삭제 파일리스트 배열로 전환 
+  const deleteList = [];
+
 
   const onClick = (name) => {
     setFileList(fileList.filter((f) => name !== f.name));
   };
 
   const onClickDelte = (filename) => {
-    setScreenImgs(screenImgs.filter((f) => filename !== f.filename));
+    console.log("삭제 이미지 "+filename);
     // 화면에서 삭제함
+    setScreenImgs(screenImgs.filter((f) => filename !== f.filename));
+    // 호스트 이미지 파일 개수 하나 빼줌 
     hostFileCnt--;
     setHostFileCnt(hostFileCnt);
-    // 호스트 이미지 파일 개수 하나 빼줌 
-    deleteList.push(filename);
-    setdeleteFileList(deleteList);
     // delete 배열에 저장함
+    deleteList.push(filename);
+    console.log("deleteList "+deleteList);
+    setdeleteFileList(deleteList);
   };
-
-  useEffect(()=>{
-    uploadedFiles && setScreenImgs([...uploadedFiles])
-  },[]);
 
   return (
     <div>
@@ -49,8 +53,8 @@ const FileList = ({
 
       {fileList &&
         fileList.map((f) => {
+          // 이미지 미리보기 
           const src = URL.createObjectURL(f);
-           // 이미지 미리보기 
           return (
             <div key={f.name}>
               <img src={src} alt="error" width="100" height="100" />

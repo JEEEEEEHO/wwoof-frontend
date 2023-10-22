@@ -28,12 +28,12 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
 
   // 기존에 업로드 되었던 파일을 삭제하는 경우
   const onClickDelte = (name) => {
+    console.log("삭제 메인 이미지 "+name);
     setScreenImg("");
     setdeleteFile(name);
   };
 
   if (screenImg) {
-    console.log(screenImg.pid);
     return (
       <div key={screenImg.pid}>
         <img
