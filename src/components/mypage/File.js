@@ -4,7 +4,7 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
 
   const [screenImg, setScreenImg] = useState("");
   
-  // (화면 보여주기용) 가져온 이미지 객체를 담음 
+  // (화면 보여주기용) 가져온 이미지 객체를 담음, 로딩할 때 한번  
   useEffect(()=>{
     uploadedFile && setScreenImg(uploadedFile)
   },[]);

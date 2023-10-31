@@ -157,7 +157,7 @@ function HostRegisterForm({ method, host }) {
       formData.append("files", f);
     });
 
-    // delete 된 파일들의 이름이 저장되어있는 파일들
+    // delete 된 파일들의 이름이 저장되어있는 베열
     if (method === "PUT" && deleteFileList) {
       deleteFileList.forEach((f) => {
         formData.append("deleteFiles", f);
