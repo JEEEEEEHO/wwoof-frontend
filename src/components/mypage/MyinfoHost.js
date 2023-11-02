@@ -5,7 +5,7 @@ function MyinfoHost() {
   const host = useLoaderData();
   
   // loader를 이용해서 가져온 response 정보
-  if (host.user === null || host.user === undefined) {
+  if (host.hostNum === null || host.hostNum === undefined) {
     return <HostRegisterForm method="POST" />; // insert
   } else {
     return <HostRegisterForm host={host} method="PUT" />; // update

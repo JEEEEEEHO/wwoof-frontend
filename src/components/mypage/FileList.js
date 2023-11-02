@@ -4,6 +4,7 @@ const FileList = ({
   fileList,
   setFileList,
   uploadedFiles,
+  deleteFileList,
   setdeleteFileList,
   hostFileCnt,
   setHostFileCnt
@@ -18,26 +19,21 @@ const FileList = ({
     uploadedFiles && setScreenImgs([...uploadedFiles])
   },[]);
 
-  // 삭제 파일리스트 배열로 전환 
-  const deleteList = [];
-
-
   const onClick = (name) => {
     setFileList(fileList.filter((f) => name !== f.name));
   };
 
   const onClickDelte = (filename) => {
-    console.log("삭제 이미지 "+filename);
     // 화면에서 삭제함
     setScreenImgs(screenImgs.filter((f) => filename !== f.filename));
     // 호스트 이미지 파일 개수 하나 빼줌 
     hostFileCnt--;
     setHostFileCnt(hostFileCnt);
     // delete 배열에 저장함
-    deleteList.push(filename);
-    console.log("deleteList "+deleteList);
-    setdeleteFileList(deleteList);
+    setdeleteFileList([...deleteFileList, filename]);
   };
+  deleteFileList.forEach(f => console.log("deleteFileList" + f));
+ 
 
   return (
     <div>

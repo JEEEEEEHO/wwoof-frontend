@@ -22,7 +22,7 @@ function HostRegisterForm({ method, host }) {
   // 호스트 정보 
   const [hostNum, setHostNum] = useState("");
   useEffect(()=>{
-    host && setHostNum(host.hnum);
+    host && setHostNum(host.hostNum);
   },[]);
 
 
@@ -66,7 +66,7 @@ function HostRegisterForm({ method, host }) {
     // 파일제한 개수
     let limitExceeded = false;
     // 서버에 등록되어 있었던 이미지의 개수
-    const uploadedImgsCnt = host ? host.hostMainImg.length : 0;
+    const uploadedImgsCnt = host ? host.hostImg.length : 0;
     setHostFileCnt(uploadedImgsCnt);
 
     const files = Array.from(e.target.files);
@@ -94,6 +94,7 @@ function HostRegisterForm({ method, host }) {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    debugger;
     const getData = new FormData(e.target);
     const deleteMainImg = deleteFile ? deleteFile : ""; // 메인이미지가 삭제된 경우
 
@@ -159,10 +160,12 @@ function HostRegisterForm({ method, host }) {
 
     // delete 된 파일들의 이름이 저장되어있는 베열
     if (method === "PUT" && deleteFileList) {
-      deleteFileList.forEach((f) => {
-        formData.append("deleteFiles", f);
+      [...deleteFileList].forEach((f) => {
+        console.log(f);
+        formData.append('deleteFiles', f);
       });
     }
+
 
     // 서버에서 받은 호스트 번호
     formData.append("hnum", id);
@@ -281,7 +284,7 @@ function HostRegisterForm({ method, host }) {
         type="text"
         name="address"
         id="address"
-        defaultValue={host ? host.inputAddress : inputAddress}
+        defaultValue={host ? host.address : inputAddress}
       />
       <label htmlFor="lat">위도</label>
       <input
@@ -333,6 +336,7 @@ function HostRegisterForm({ method, host }) {
           fileList={fileList}
           setFileList={setFileList}
           uploadedFiles={host ? host.hostImg : ""}
+          deleteFileList = {deleteFileList}
           setdeleteFileList={setdeleteFileList}
           uploadedImgsCnt={hostFileCnt}
           setHostFileCnt={setHostFileCnt}
