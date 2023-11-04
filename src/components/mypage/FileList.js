@@ -32,7 +32,6 @@ const FileList = ({
     // delete 배열에 저장함
     setdeleteFileList([...deleteFileList, filename]);
   };
-  deleteFileList.forEach(f => console.log("deleteFileList" + f));
  
 
   return (

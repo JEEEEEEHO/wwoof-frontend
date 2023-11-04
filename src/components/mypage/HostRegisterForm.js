@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useNavigation, json, redirect } from "react-router-dom";
 
-
 import FileList from "./FileList";
 import File from "./File";
 import AddressFind from "./AddressFind";
@@ -19,12 +18,11 @@ function HostRegisterForm({ method, host }) {
     navigate("..");
   }
 
-  // 호스트 정보 
+  // 호스트 정보
   const [hostNum, setHostNum] = useState("");
-  useEffect(()=>{
+  useEffect(() => {
     host && setHostNum(host.hostNum);
-  },[]);
-
+  }, []);
 
   // 대표 이미지 입력
   const [file, setFile] = useState("");
@@ -40,13 +38,13 @@ function HostRegisterForm({ method, host }) {
   const [fileLimit, setFileLimit] = useState(false);
   const [hostFileCnt, setHostFileCnt] = useState(0);
 
-  // 카카오 주소 
+  // 카카오 주소
   const [inputAddress, setInputAddress] = useState("");
-  // 위도 
+  // 위도
   const [lat, setLat] = useState("");
-  // 경도 
+  // 경도
   const [lng, setLng] = useState("");
- 
+
   const handleMainImgChoose = (e) => {
     e.preventDefault();
     refMainImg.current && refMainImg.current.click();
@@ -108,11 +106,11 @@ function HostRegisterForm({ method, host }) {
       farmsts: getData.get("farmsts"),
       maxPpl: getData.get("maxPpl"),
       intro: getData.get("intro"),
-      address : getData.get("address"),
+      address: getData.get("address"),
       lat: getData.get("lat"),
       lng: getData.get("lng"),
       deleteMainImg: deleteMainImg,
-      hostNum : hostNum
+      hostNum: hostNum,
     };
 
     formData.append("file", getData.get("mainImg"));
@@ -130,7 +128,9 @@ function HostRegisterForm({ method, host }) {
 
     // update or insert
     let url =
-      method === "PUT" ? "http://localhost:8080/api/host/update" : "http://localhost:8080/api/host/save";
+      method === "PUT"
+        ? "http://localhost:8080/api/host/update"
+        : "http://localhost:8080/api/host/save";
     const response = await fetch(url, {
       method: method,
       headers: headers,
@@ -160,11 +160,17 @@ function HostRegisterForm({ method, host }) {
 
     // delete 된 파일들의 이름이 저장되어있는 베열
     if (method === "PUT" && deleteFileList) {
-      [...deleteFileList].forEach((f) => {
-        console.log(f);
-        formData.append('deleteFiles', f);
+      deleteFileList.forEach((f) => {
+        console.log("f " + typeof f);
+        formData.append(
+          "deleteFiles", f
+        ); // 배열로 받아옴 [a, b, ...]
       });
     }
+    console.log("deleteFileList " + typeof deleteFileList);
+    console.log("deleteFileList[0] " + deleteFileList[0]);
+    console.log("formData deleteFiles " + typeof formData.getAll("deleteFiles"));
+    console.log("formData deleteFiles " + formData.getAll("deleteFiles"));
 
 
     // 서버에서 받은 호스트 번호
@@ -172,7 +178,9 @@ function HostRegisterForm({ method, host }) {
 
     // update or insert
     let url =
-      method === "PUT" ? "http://localhost:8080/api/host/updateImg" : "http://localhost:8080/api/host/saveImg";
+      method === "PUT"
+        ? "http://localhost:8080/api/host/updateImg"
+        : "http://localhost:8080/api/host/saveImg";
     const response = await fetch(url, {
       method: method,
       body: formData,
@@ -278,7 +286,11 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
-      <AddressFind setInputAddress={setInputAddress} setLat={setLat} setLng={setLng} />
+      <AddressFind
+        setInputAddress={setInputAddress}
+        setLat={setLat}
+        setLng={setLng}
+      />
       <label htmlFor="address">주소</label>
       <input
         type="text"
@@ -336,7 +348,7 @@ function HostRegisterForm({ method, host }) {
           fileList={fileList}
           setFileList={setFileList}
           uploadedFiles={host ? host.hostImg : ""}
-          deleteFileList = {deleteFileList}
+          deleteFileList={deleteFileList}
           setdeleteFileList={setdeleteFileList}
           uploadedImgsCnt={hostFileCnt}
           setHostFileCnt={setHostFileCnt}
@@ -347,12 +359,16 @@ function HostRegisterForm({ method, host }) {
         <button type="button" onClick={cancelHandler} disabled={isSubmiting}>
           취소
         </button>
-        {host&&<button type="submit" disabled={isSubmiting}>
-          수정
-        </button>}
-        {!host&&<button type="submit" disabled={isSubmiting}>
-          저장
-        </button>}
+        {host && (
+          <button type="submit" disabled={isSubmiting}>
+            수정
+          </button>
+        )}
+        {!host && (
+          <button type="submit" disabled={isSubmiting}>
+            저장
+          </button>
+        )}
       </div>
     </form>
   );
