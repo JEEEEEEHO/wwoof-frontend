@@ -11,7 +11,7 @@ function Sidebar(){
                             <Link to="">나의정보</Link>
                         </li>
                         <li className="sidebarListItem">
-                            <Link to="myinfoHost">호스트신청</Link> 
+                            <Link to="hostInfo">호스트신청</Link> 
                             {/* 신청한사람은 정보보기 */}
                         </li>
                     </ul>

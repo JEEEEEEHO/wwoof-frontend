@@ -14,7 +14,7 @@ function MainNavigation() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="hostSearch">호스트 찾기</NavLink>
+            <NavLink to="hosts">호스트 찾기</NavLink>
           </li>
         </ul>
       </nav>

@@ -1,5 +1,5 @@
 import { useLoaderData, json } from "react-router-dom";
-import HostRegisterForm from "./HostRegisterForm";
+import HostRegisterForm from "./MyinfoHostRegisterForm";
 
 function MyinfoHost() {
   const host = useLoaderData();

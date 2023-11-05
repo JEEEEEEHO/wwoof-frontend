@@ -4,27 +4,35 @@ import Homepage from "./components/pages/Homepage";
 import RoutLayout from "./components/RoutLayout";
 import ErrorPage from "./components/pages/Error";
 
-import Board, { loader as boardsLoader } from "./components/board/Board";
+// Board
+import BoardPage, { loader as boardsLoader } from "./components/board/BoardPage";
 import BoardDetailPage, {
   loader as boardDetailLoader,
   action as deleteBoardAction,
-} from "./components/board/BoardDetail";
+} from "./components/board/BoardDetailPage";
 import NewBoard from "./components/board/NewBoard";
 import BoardEdit from "./components/board/BoardEdit";
 import { action as manipulateBoardAction } from "./components/board/BoardForm";
-import HostSearch from "./components/host/HostSearch";
-import Login from "./components/login/Login";
+
+// Host Serach
+import HostSearchPage, {loader as hostsLoader} from "./components/host/HostSearchPage";
+
+import HostDetailPage from "./components/host/HostDetailPage";
+
+// Login Logout Join
+import LoginPage from "./components/login/LoginPage";
 import { action as signinAction } from "./components/login/LoginForm";
-import Join from "./components/login/Join";
+import JoinPage from "./components/login/JoinPage";
 import { action as joinAction } from "./components/login/JoinForm";
 import { action as logoutAction } from "./components/login/Logout";
 import { tokenLoader } from "./components/auth";
 import SocialLogin from "./components/login/SocialLogin";
 
+// Mypage
 import SidebarLayout from "./components/mypage/SidebarLayout"
 import Myinfo from "./components/mypage/Myinfo"
 import MyinfoHost, { loader as hostLoader }  from "./components/mypage/MyinfoHost"; 
-import HostRegisterForm from "./components/mypage/HostRegisterForm"
+
 const router = createBrowserRouter([
   {
     //Header
@@ -38,7 +46,7 @@ const router = createBrowserRouter([
 
       {
         path: "login",
-        element: <Login />,
+        element: <LoginPage />,
         action: signinAction,
       },
       {
@@ -47,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "join",
-        element: <Join />,
+        element: <JoinPage />,
         action: joinAction,
       },
       {
@@ -61,8 +69,21 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <HostSearch />,
+            element: <HostSearchPage />,
+            loader: hostsLoader,
           },
+          {
+            path: ":hostNum",
+            id: "host-detail",
+            //loader: boardDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <HostDetailPage />,
+                //action: deleteBoardAction,
+              },
+            ]
+          }
           
         ],
       },
@@ -77,16 +98,12 @@ const router = createBrowserRouter([
             element : <Myinfo />
           },
           {
-            path : "myinfoHost",
+            path : "hostInfo",
             children :[
               {
                 index : true,
                 element : <MyinfoHost />,
                 loader : hostLoader,
-              }, 
-              {
-                path : "newHost",
-                element : <HostRegisterForm />,
               }, 
             ]
           }
@@ -99,7 +116,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Board />,
+            element: <BoardPage />,
             loader: boardsLoader,
           },
           {
