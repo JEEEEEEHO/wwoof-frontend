@@ -30,7 +30,9 @@ const FileList = ({
     hostFileCnt--;
     setHostFileCnt(hostFileCnt);
     // delete 배열에 저장함
-    setdeleteFileList([...deleteFileList, filename]);
+    setdeleteFileList(deleteFileList =>{
+      return [...deleteFileList, filename]
+    });
   };
  
 

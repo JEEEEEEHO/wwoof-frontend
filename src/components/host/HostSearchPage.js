@@ -13,7 +13,7 @@ import { useLoaderData, json, defer, Await } from "react-router-dom";
 //   ];
 
 
- const HostSearch = () => {
+ const HostSearchPage = () => {
     const hosts = useLoaderData();
 
     const [hostsList, setHostsList] = useState([]);
@@ -36,7 +36,7 @@ import { useLoaderData, json, defer, Await } from "react-router-dom";
     )
  } 
 
- export default HostSearch;
+ export default HostSearchPage;
 
  export async function loader() {
 
