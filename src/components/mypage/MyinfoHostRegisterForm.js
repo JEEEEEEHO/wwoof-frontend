@@ -92,7 +92,6 @@ function HostRegisterForm({ method, host }) {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    debugger;
     const getData = new FormData(e.target);
     const deleteMainImg = deleteFile ? deleteFile : ""; // 메인이미지가 삭제된 경우
 
