@@ -7,12 +7,35 @@ const HostOption = ({ setHostList }) => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    
-    let headers = new Headers();
 
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if (accessToken && accessToken !== null) {
-      headers.append("Authorization", "Bearer " + accessToken);
+    const getData = new FormData(e.target);
+
+    const params = {
+      startDate : getData.get("startDate"),
+      endDate : getData.get("endDate"),
+      people : getData.get("people"),
+      gender : hostGender,
+      farmsts : hostFarmsts
+    }
+
+    const queryParam = new URLSearchParams(params).toString();
+    const baseurl = "http://localhost:8080/api/host/list";
+    let url = `${baseurl}?${queryParam}`;
+
+    try{
+      const response = await fetch (url);
+      if (!response.ok) {
+        throw json(
+          { message: "Could not search events." },
+          {
+            status: 500,
+          }
+        );
+      } else {
+          setHostList(response);
+      }
+    }catch (e){
+      console.log(e);
     }
 
 
@@ -26,19 +49,19 @@ const HostOption = ({ setHostList }) => {
             <input
               type="date"
               placeholder="시작일"
-              name="startdate"
-              id="startdate"
+              name="startDate"
+              id="startDate"
             />
             <input
               type="date"
               placeholder="종료일"
-              name="enddate"
-              id="enddate"
+              name="endDate"
+              id="endDate"
             />
           </div>
           <div>
             <div>인원</div>
-            <select name="people" id="people">
+            <select name="people" id="people" onChange={}>
               <option selected="selected" value="one">
                 1
               </option>
@@ -48,7 +71,7 @@ const HostOption = ({ setHostList }) => {
           </div>
           <div>
             <div>지역</div>
-            <select name="region" id="region">
+            <select name="region" id="region" onChange={}>
               <option selected="selected" value="1">
                 경기도
               </option>
