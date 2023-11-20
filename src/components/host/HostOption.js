@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, json } from "react";
 import HostOptionAdd from "./HostOptionAdd";
 
 const HostOption = ({ setHostList }) => {
@@ -42,7 +42,6 @@ const HostOption = ({ setHostList }) => {
   };
 
   return (
-    <div>
       <div>
         <form onSubmit={handleSearch}>
           <div>
@@ -61,20 +60,21 @@ const HostOption = ({ setHostList }) => {
           </div>
           <div>
             <div>인원</div>
-            <select name="people" id="people" onChange={}>
-              <option selected="selected" value="one">
+            <select name="people" id="people">
+              <option selected="selected" value="1">
                 1
               </option>
-              <option value="two">2</option>
-              <option value="three">3</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
             </select>
           </div>
           <div>
             <div>지역</div>
-            <select name="region" id="region" onChange={}>
-              <option selected="selected" value="1">
-                경기도
+            <select name="region" id="region">
+              <option selected="selected" value="">
+                전체
               </option>
+              <option value="1">경기도</option>
               <option value="2">충청도</option>
             </select>
           </div>
@@ -87,7 +87,6 @@ const HostOption = ({ setHostList }) => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 

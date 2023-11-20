@@ -6,13 +6,6 @@ import HostMap from "./HostMap";
 
 import { useLoaderData, json, defer, Await } from "react-router-dom";
 
-// const HOSTS = [
-//     { id: "e1", title: "event 1" },
-//     { id: "e2", title: "event 2" },
-//     { id: "e3", title: "event 3" },
-//   ];
-
-
  const HostSearchPage = () => {
     const hosts = useLoaderData();
 

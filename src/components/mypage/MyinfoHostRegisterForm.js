@@ -160,18 +160,11 @@ function HostRegisterForm({ method, host }) {
     // delete 된 파일들의 이름이 저장되어있는 베열
     if (method === "PUT" && deleteFileList) {
       deleteFileList.forEach((f) => {
-        console.log("f " + typeof f);
         formData.append(
           "deleteFiles", f
         ); // 배열로 받아옴 [a, b, ...]
       });
     }
-    console.log("deleteFileList " + typeof deleteFileList);
-    console.log("deleteFileList[0] " + deleteFileList[0]);
-    console.log("formData deleteFiles " + typeof formData.getAll("deleteFiles"));
-    console.log("formData deleteFiles " + formData.getAll("deleteFiles"));
-
-
     // 서버에서 받은 호스트 번호
     formData.append("hnum", id);
 

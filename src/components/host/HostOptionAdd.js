@@ -27,6 +27,15 @@ const HostOptionAdd = (setHostGender, setHostFarmsts) => {
         onChange={genderChangeHandler}
       />
       <label>남</label>
+      <input
+        type="radio"
+        name="gender"
+        id="gender"
+        value=""
+        defaultChecked
+        onChange={genderChangeHandler}
+      />
+      <label>무관</label>
       <br />
       <label htmlFor="farmsts">농법</label>
       <input
@@ -45,6 +54,15 @@ const HostOptionAdd = (setHostGender, setHostFarmsts) => {
         onChange={farmstsChangeHandler}
       />
       <label>유기농</label>
+      <input
+        type="radio"
+        name="farmsts"
+        id="farmsts"
+        value=""
+        defaultChecked
+        onChange={farmstsChangeHandler}
+      />
+      <label>무관</label>
     </>
   );
 };
