@@ -19,7 +19,7 @@ const HostOption = ({ setHostList }) => {
     }
 
     const queryParam = new URLSearchParams(params).toString();
-    const baseurl = "http://localhost:8080/api/host/list";
+    const baseurl = "http://localhost:8080/api/host/search";
     let url = `${baseurl}?${queryParam}`;
 
     try{

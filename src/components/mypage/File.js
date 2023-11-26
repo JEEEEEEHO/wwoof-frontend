@@ -10,7 +10,7 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
   },[]);
 
 
-  // 새로 등록하는 파일을 업로드 하는 경우
+  // 1) 새로 등록하는 파일을 업로드 하는 경우
   const onClick = (name) => {
     setFile("");
   };
@@ -26,7 +26,7 @@ const File = ({ file, setFile, uploadedFile, setdeleteFile }) => {
     );
   }
 
-  // 기존에 업로드 되었던 파일을 삭제하는 경우
+  // 2) 기존에 업로드 되었던 파일을 삭제하는 경우
   const onClickDelte = (name) => {
     setScreenImg("");
     setdeleteFile(name);
