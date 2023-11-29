@@ -52,7 +52,6 @@ function HostRegisterForm({ method, host }) {
   const handleMainImgChange = (e) => {
     setFile(e.target.files);
   };
-  console.log(file);
 
   const handleChoose = (e) => {
     e.preventDefault();

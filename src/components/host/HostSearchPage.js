@@ -1,10 +1,10 @@
 
-import { useState, Suspense, useEffect } from "react";
+import { useState, useEffect } from "react";
 import HostList from "./HostList";
 import HostOption from "./HostOption";
 import HostMap from "./HostMap";
 
-import { useLoaderData, json, defer, Await } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 
  const HostSearchPage = () => {
     const hosts = useLoaderData();

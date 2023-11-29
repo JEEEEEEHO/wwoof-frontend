@@ -13,6 +13,7 @@ const HostOption = ({ setHostList }) => {
     const params = {
       startDate : getData.get("startDate"),
       endDate : getData.get("endDate"),
+      region : getData.get("region"),
       people : getData.get("people"),
       gender : hostGender,
       farmsts : hostFarmsts
