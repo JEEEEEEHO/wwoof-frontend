@@ -1,7 +1,7 @@
 import { useState, json } from "react";
 import HostOptionAdd from "./HostOptionAdd";
 
-const HostOption = ({ setHostList }) => {
+const HostOption = ({ setHostsList }) => {
   const [hostGender, setHostGender] = useState("");
   const [hostFarmsts, setHostFarmsts] = useState("");
 
@@ -33,7 +33,7 @@ const HostOption = ({ setHostList }) => {
           }
         );
       } else {
-          setHostList(response);
+        response.json().then((data)=>setHostsList(data));
       }
     }catch (e){
       console.log(e);
@@ -61,20 +61,16 @@ const HostOption = ({ setHostList }) => {
           </div>
           <div>
             <div>인원</div>
-            <select name="people" id="people">
-              <option selected="selected" value="1">
-                1
-              </option>
+            <select name="people" id="people" defaultValue="1">
+              <option value="1" selected>1</option>
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
           </div>
           <div>
             <div>지역</div>
-            <select name="region" id="region">
-              <option selected="selected" value="">
-                전체
-              </option>
+            <select name="region" id="region" defaultValue="">
+              <option value="">전체</option>
               <option value="1">경기도</option>
               <option value="2">충청도</option>
             </select>

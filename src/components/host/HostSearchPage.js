@@ -10,8 +10,6 @@ import { useLoaderData, json } from "react-router-dom";
     const hosts = useLoaderData();
 
     const [hostsList, setHostsList] = useState([]);
-    console.log("hosts "+hosts);
-    console.log("typeof hosts "+typeof hosts);
     
     // 가장 처음 페이지 렌더링 될 때 
     useEffect(()=>{
@@ -22,8 +20,10 @@ import { useLoaderData, json } from "react-router-dom";
 
     return (
         <>
-            <HostOption setHostsList={setHostsList} />
+            <HostOption setHostsList={setHostsList} />  
+            {/* 검색에서 찾음 */}
             <HostList hosts={hostsList} />
+            {/* 검색에서 찾은 값을 리스트로 보냄 */}
             <HostMap />
         </>
     )
