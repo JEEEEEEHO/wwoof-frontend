@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import isEqual from "lodash-es"
 
 const HostList = (props) => {
-  const [existHost, setExistHost] = useState(false); // 아무것도 없음
-  console.log(props);
+  const [existHost, setExistHost] = useState(true); // 아무것도 없음
+  for(const {hnum} of props.hosts){
+    console.log("현재 호스트 정보 : " + typeof hnum)
+    if(hnum < 0){
+      setExistHost(false);
+      break;
+    }
+  }
+  console.log("existHost "+existHost);
 
   useEffect(() => {
-    props.hosts.map((host) => {
-      console.log(host.hnum);
-      if (host.hnum > 0) {
-        setExistHost(true);
-      }
-    });
-  }, []);
+    console.log("매번 렌더링 마다 실행됨 ");
+  }, [existHost]);
 
   return (
     <>
