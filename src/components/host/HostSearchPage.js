@@ -24,7 +24,7 @@ import { useLoaderData, json } from "react-router-dom";
             {/* 검색에서 찾음 */}
             <HostList hosts={hostsList} />
             {/* 검색에서 찾은 값을 리스트로 보냄 */}
-            <HostMap />
+            <HostMap hosts={hostsList}/>
         </>
     )
  } 
