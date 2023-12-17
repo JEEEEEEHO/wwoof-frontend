@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Homepage from "./components/pages/Homepage";
+import Homepage from "./compsonents/pages/Homepage";
 import RoutLayout from "./components/RoutLayout";
 import ErrorPage from "./components/pages/Error";
 
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
           {
             path: ":hostNum",
             id: "host-detail",
-            //loader: boardDetailLoader,
+            loader: boardDetailLoader,
             children: [
               {
                 index: true,
