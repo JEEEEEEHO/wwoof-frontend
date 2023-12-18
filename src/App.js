@@ -1,11 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Homepage from "./compsonents/pages/Homepage";
+import Homepage from "./components/pages/Homepage";
 import RoutLayout from "./components/RoutLayout";
 import ErrorPage from "./components/pages/Error";
 
 // Board
-import BoardPage, { loader as boardsLoader } from "./components/board/BoardPage";
+import BoardPage, {
+  loader as boardsLoader,
+} from "./components/board/BoardPage";
 import BoardDetailPage, {
   loader as boardDetailLoader,
   action as deleteBoardAction,
@@ -15,9 +17,11 @@ import BoardEdit from "./components/board/BoardEdit";
 import { action as manipulateBoardAction } from "./components/board/BoardForm";
 
 // Host Serach
-import HostSearchPage, {loader as hostsLoader} from "./components/host/HostSearchPage";
+import HostSearchPage, {
+  loader as hostsLoader,
+} from "./components/host/HostSearchPage";
 
-import HostDetailPage from "./components/host/HostDetailPage";
+import HostDetailPage, {loader as hostDetailLoader} from "./components/host/HostDetailPage";
 
 // Login Logout Join
 import LoginPage from "./components/login/LoginPage";
@@ -29,9 +33,11 @@ import { tokenLoader } from "./components/auth";
 import SocialLogin from "./components/login/SocialLogin";
 
 // Mypage
-import SidebarLayout from "./components/mypage/SidebarLayout"
-import Myinfo from "./components/mypage/Myinfo"
-import MyinfoHost, { loader as hostLoader }  from "./components/mypage/MyinfoHost"; 
+import SidebarLayout from "./components/mypage/SidebarLayout";
+import Myinfo from "./components/mypage/Myinfo";
+import MyinfoHost, {
+  loader as hostLoader,
+} from "./components/mypage/MyinfoHost";
 
 const router = createBrowserRouter([
   {
@@ -75,39 +81,38 @@ const router = createBrowserRouter([
           {
             path: ":hostNum",
             id: "host-detail",
-            loader: boardDetailLoader,
+            loader: hostDetailLoader,
             children: [
               {
                 index: true,
                 element: <HostDetailPage />,
                 //action: deleteBoardAction,
               },
-            ]
-          }
-          
+            ],
+          },
         ],
       },
 
       // My Page
       {
-        path : "mypage",
-        element : <SidebarLayout />,
-        children:[
+        path: "mypage",
+        element: <SidebarLayout />,
+        children: [
           {
-            index : true,
-            element : <Myinfo />
+            index: true,
+            element: <Myinfo />,
           },
           {
-            path : "hostInfo",
-            children :[
+            path: "hostInfo",
+            children: [
               {
-                index : true,
-                element : <MyinfoHost />,
-                loader : hostLoader,
-              }, 
-            ]
-          }
-        ]
+                index: true,
+                element: <MyinfoHost />,
+                loader: hostLoader,
+              },
+            ],
+          },
+        ],
       },
 
       // Footer

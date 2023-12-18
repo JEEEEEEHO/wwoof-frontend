@@ -17,7 +17,7 @@ const HostList = (props) => {
                   alt={host.hostMainImg.filename}
                   style={{ width: "200px", height: "150px" }}
                 />
-                <Link to={host.hnum}>{host.shortintro}</Link>
+                <Link to={host.hnum.toString()}>{host.shortintro}</Link>
               </li>
             ))}
           </ul>

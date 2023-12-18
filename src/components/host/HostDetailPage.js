@@ -2,8 +2,8 @@ import { json, useLoaderData } from "react-router-dom";
 
 function HostDetailPage() {
   const data = useLoaderData();
-  console.log(data);
-  console.log(data.hnum);
+  console.log("data : "+ data);
+  console.log("data.hnum : "+data.hnum);
   return (
     <>
       <h1>{data.hnum}</h1>
@@ -36,7 +36,8 @@ export default HostDetailPage;
 export async function loader({ request, params }) {
   //params 로 작업 가능
   const hnum = params.hnum;
-  const response = await fetch("http://localhost:8080/api/host/" + hnum);
+  console.log("hnum : "+params.hnum);
+  const response = await fetch("http://localhost:8080/api/host/"+hnum);
 
   if (!response.ok) {
     throw json(
