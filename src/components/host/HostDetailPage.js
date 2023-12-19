@@ -1,14 +1,13 @@
-import { json, useLoaderData } from "react-router-dom";
+import { json, useRouteLoaderData } from "react-router-dom";
 
 function HostDetailPage() {
-  const data = useLoaderData();
-  console.log("data : "+ data);
-  console.log("data.hnum : "+data.hnum);
+  const data = useRouteLoaderData("host-detail");
   return (
     <>
-      <h1>{data.hnum}</h1>
+      <h1>{data.hostNum}</h1>
       <ul>
         {data.hostImg.map((img) => {
+          console.log(img.fileUri);
           <li key={img.hostImg_turn}>
             <img
               src={img.fileUri}
@@ -17,9 +16,8 @@ function HostDetailPage() {
             />
           </li>;
         })}
-      </ul>
-      <p>{data.shortintro}</p>
-      <ul>
+
+        <p>{data.shortintro}</p>
         <li>{data.region}</li>
         <li>{data.gender}</li>
         <li>{data.age}</li>
@@ -35,9 +33,9 @@ export default HostDetailPage;
 
 export async function loader({ request, params }) {
   //params 로 작업 가능
-  const hnum = params.hnum;
-  console.log("hnum : "+params.hnum);
-  const response = await fetch("http://localhost:8080/api/host/"+hnum);
+  const hnum = params.hostNum;
+  console.log("hnum : " + hnum);
+  const response = await fetch("http://localhost:8080/api/host/" + hnum);
 
   if (!response.ok) {
     throw json(
