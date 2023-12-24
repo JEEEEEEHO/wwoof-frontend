@@ -6,16 +6,15 @@ function HostDetailPage() {
     <>
       <h1>{data.hostNum}</h1>
       <ul>
-        {data.hostImg.map((img) => {
-          console.log(img.fileUri);
+        {data.hostImg.map((img) => (
           <li key={img.hostImg_turn}>
             <img
               src={img.fileUri}
               alt={img.filename}
               style={{ width: "200px", height: "150px" }}
             />
-          </li>;
-        })}
+          </li>
+        ))}
 
         <p>{data.shortintro}</p>
         <li>{data.region}</li>
