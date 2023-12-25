@@ -27,6 +27,11 @@ function MainNavigation() {
           )}
           {token && (
             <li>
+              <NavLink to="/">위시리스트</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
               <NavLink to="mypage">마이페이지</NavLink>
             </li>
           )}
