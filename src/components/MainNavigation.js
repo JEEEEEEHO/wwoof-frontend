@@ -1,8 +1,16 @@
+import { useContext } from "react";
 import classes from "./MainNavigation.module.css";
 import { NavLink, useRouteLoaderData, Form } from "react-router-dom";
+import WishContext from "../store/wish-context";
 
 function MainNavigation() {
   const token = useRouteLoaderData("root");
+
+  const wishCtx = useContext(WishContext);
+
+  const numberOfWishItems = wishCtx.items.reduce((curNumber, item)=>{
+    return (curNumber+item.amout);
+  },0);
 
   return (
     <header className={classes.header}>
@@ -20,16 +28,18 @@ function MainNavigation() {
       </nav>
       <nav>
         <ul>
+          <li>
+            <NavLink to="/">
+              <span>위시리스트</span>
+              <span>{numberOfWishItems}</span>
+            </NavLink>
+          </li>
           {!token && (
             <li>
               <NavLink to="login">로그인</NavLink>
             </li>
           )}
-          {token && (
-            <li>
-              <NavLink to="/">위시리스트</NavLink>
-            </li>
-          )}
+
           {token && (
             <li>
               <NavLink to="mypage">마이페이지</NavLink>
