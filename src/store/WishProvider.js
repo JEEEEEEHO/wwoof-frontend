@@ -79,6 +79,7 @@ const WishProvider = (props) => {
         dispatchWishAction({type: 'CLEAR'});
       };
     
+      // 1번 
       const cartContext = {
         items: wishState.items,
         totalAmount: wishState.totalAmount,

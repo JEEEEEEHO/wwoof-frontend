@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import wishlistLogo from "../../img/wishlist.png";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import WishContext from "../store/wish-context";
 
 const HostList = (props) => {
 
   const wishCtx = useContext(WishContext);
+
+  const [logoFull, setLogoFull] = useState(false);
 
   const cartItemRemoveHandler = (id) => {
     wishCtx.removeItem(id);
