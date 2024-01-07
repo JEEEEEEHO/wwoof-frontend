@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-import wishlistLogo from "../../img/wishlist.png";
+import emptyWishList from "../../img/emptyWishList.png";
+import fullWishList from "../../img/fullWishList.png"
 import { useContext, useState } from "react";
 import WishContext from "../store/wish-context";
 
 const HostList = (props) => {
-
   const wishCtx = useContext(WishContext);
 
-  const [logoFull, setLogoFull] = useState(false);
+  const [chosenWish, setChosenWish] = useState(false);
 
-  const cartItemRemoveHandler = (id) => {
+  const wishItemRemoveHandler = (id) => {
+    setChosenWish(false);
     wishCtx.removeItem(id);
+  };
+
+  const wishItemAddHandler = (id) => {
+    wishCtx.addItem(id);
   };
 
   for (const { hnum } of props.hosts) {
@@ -27,8 +32,26 @@ const HostList = (props) => {
                   alt={host.hostMainImg.filename}
                   style={{ width: "200px", height: "150px" }}
                 />
-                <button type="button" aria-label="위시리스트에 저장" onClick={cartItemRemoveHandler}>
-                  <img src={wishlistLogo} alt="wishlist" style={{ width: "10px", height: "10px" }} />
+                <button
+                  type="button"
+                  aria-label="위시리스트에 저장"
+                  onClick={
+                    chosenWish ? wishItemAddHandler : wishItemRemoveHandler
+                  }
+                >
+                  {chosenWish ? (
+                    <img
+                      src={fullWishList}
+                      alt="wishlist"
+                      style={{ width: "10px", height: "10px" }}
+                    />
+                  ) : (
+                    <img
+                      src={emptyWishList}
+                      alt="wishlist"
+                      style={{ width: "10px", height: "10px" }}
+                    />
+                  )}
                 </button>
                 <Link to={host.hnum.toString()}>{host.shortintro}</Link>
               </li>

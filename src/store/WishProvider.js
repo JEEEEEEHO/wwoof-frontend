@@ -5,16 +5,16 @@ const defaultWishState = {
     items : [],
     totalAmount: 0
 }
-
+// 3번
 const wishReducer = (state, action)=>{
     if (action.type === 'ADD') {
         const updatedTotalAmount =
           state.totalAmount + action.item.price * action.item.amount;
     
-        const existingCartItemIndex = state.items.findIndex(
+        const existingWishItemIndex = state.items.findIndex(
           (item) => item.id === action.item.id
         );
-        const existingCartItem = state.items[existingCartItemIndex];
+        const existingCartItem = state.items[existingWishItemIndex];
         let updatedItems;
     
         if (existingCartItem) {
@@ -23,7 +23,7 @@ const wishReducer = (state, action)=>{
             amount: existingCartItem.amount + action.item.amount,
           };
           updatedItems = [...state.items];
-          updatedItems[existingCartItemIndex] = updatedItem;
+          updatedItems[existingWishItemIndex] = updatedItem;
         } else {
           updatedItems = state.items.concat(action.item);
         }
@@ -67,6 +67,7 @@ const WishProvider = (props) => {
         wishReducer, 
         defaultWishState
     );
+    // 2번
     const addItemToWishHandler = (item) => {
         dispatchWishAction({ type: 'ADD', item: item });
       };
@@ -89,7 +90,8 @@ const WishProvider = (props) => {
       };
 
       return(
-        <WishContext.Provider value={cartContext}>
+        <WishContext.Provider value={cartContext}> 
+        {/* 4번 */}
             {props.children}
         </WishContext.Provider>
       )
