@@ -36,7 +36,7 @@ const HostList = (props) => {
                   type="button"
                   aria-label="위시리스트에 저장"
                   onClick={
-                    chosenWish ? wishItemAddHandler : wishItemRemoveHandler
+                    chosenWish ? ()=> wishItemAddHandler(host.hnum) : ()=>wishItemRemoveHandler(host.hnum)
                   }
                 >
                   {chosenWish ? (

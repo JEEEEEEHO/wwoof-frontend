@@ -8,8 +8,8 @@ function MainNavigation() {
 
   const wishCtx = useContext(WishContext);
 
-  const numberOfWishItems = wishCtx.items.reduce((curNumber, item)=>{
-    return (curNumber+item.amout);
+  const numberOfWishItems = wishCtx.hosts.reduce((curNumber, host)=>{
+    return (curNumber+host.amout); // 현재 값에서 + item 의 양
   },0);
 
   return (
