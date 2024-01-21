@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import emptyWishList from "../../img/emptyWishList.png";
 import fullWishList from "../../img/fullWishList.png"
 import { useContext, useState } from "react";
-import WishContext from "../store/wish-context";
+import WishContext from "../../store/wish-context";
 
 const HostList = (props) => {
   const wishCtx = useContext(WishContext);
@@ -11,11 +11,12 @@ const HostList = (props) => {
 
   const wishItemRemoveHandler = (id) => {
     setChosenWish(false);
-    wishCtx.removeItem(id);
+    wishCtx.removeHost(id);
   };
 
   const wishItemAddHandler = (id) => {
-    wishCtx.addItem(id);
+    setChosenWish(true);
+    wishCtx.addHost(id);
   };
 
   for (const { hnum } of props.hosts) {
@@ -36,7 +37,7 @@ const HostList = (props) => {
                   type="button"
                   aria-label="위시리스트에 저장"
                   onClick={
-                    chosenWish ? ()=> wishItemAddHandler(host.hnum) : ()=>wishItemRemoveHandler(host.hnum)
+                    chosenWish ? ()=> wishItemRemoveHandler(host.hnum) : ()=>wishItemAddHandler(host.hnum)
                   }
                 >
                   {chosenWish ? (

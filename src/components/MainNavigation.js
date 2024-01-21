@@ -8,10 +8,7 @@ function MainNavigation() {
 
   const wishCtx = useContext(WishContext);
 
-  const numberOfWishItems = wishCtx.hosts.reduce((curNumber, host)=>{
-    return (curNumber+host.amout); // 현재 값에서 + item 의 양
-  },0);
-
+  const numberOfWishHosts = wishCtx.hosts.length;
   return (
     <header className={classes.header}>
       <nav>
@@ -31,7 +28,7 @@ function MainNavigation() {
           <li>
             <NavLink to="/">
               <span>위시리스트</span>
-              <span>{numberOfWishItems}</span>
+              <span>{numberOfWishHosts}</span>
             </NavLink>
           </li>
           {!token && (

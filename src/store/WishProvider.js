@@ -3,66 +3,36 @@ import WishContext from "./wish-context";
 
 const defaultWishState = {
   hosts: [],
-  //totalAmount: 0
 };
 // 3번
 const wishReducer = (state, action) => {
   // 아래의 것들은 값을 계산하기 위함 (같은 것을 집어넣어도 값은 증가)
-  const existingWishHostIndex = state.hosts.findIndex(
-    // 기존에 존재하는 hosts들
-    (hnum) => hnum === action.host.hnum // true를 반환할 때까지 계속, 인덱스 반환
-  );
 
-  
   if (action.type === "ADD") {
-    // const updatedTotalAmount =
-    //   state.totalAmount + action.item.price * action.item.amount;
+    let updatedHosts;
 
-    const existingWishHost = state.hosts[existingWishHostIndex]; // 기존에 존재하는 인덱스
-    let updatedItems;
-
-    if (existingWishHost) {
-      const updatedItem = {
-        ...existingWishHost,
-        amount: existingWishHost.amount + action.item.amount,
-      };
-      updatedItems = [...state.items];
-      updatedItems[existingWishHostIndex] = updatedItem;
-    } else {
-      updatedItems = state.items.concat(action.item);
-    }
+    updatedHosts = state.hosts.concat(action.item); // concat으로 불변성 지키면서 값(호스트번호) 추가
 
     return {
-      items: updatedItems,
-      //totalAmount: updatedTotalAmount,
+      hosts: updatedHosts,
     };
   }
 
   if (action.type === "REMOVE") {
-    const existingCartItemIndex = state.items.findIndex(
-      (item) => item.id === action.id
+    const existingHostIndex = state.hosts.findIndex(
+      (host) => host === action.hnum
     );
-    const existingItem = state.items[existingCartItemIndex];
-    const updatedTotalAmount = state.totalAmount - existingItem.price;
-    let updatedItems;
-    if (existingItem.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
+    let updatedHosts;
+    if(existingHostIndex){
+      // 존재하는 번호가 있다면
+      updatedHosts = state.hosts.filter((host) => host !== action.hnum);
+      // 넘어온 값 (삭제값) 이 아닌 것들만 남겨놓음
     }
-
+    
     return {
-      items: updatedItems,
-      totalAmount: updatedTotalAmount,
+      hosts: updatedHosts,
     };
   }
-
-  if (action.type === "CLEAR") {
-    return defaultWishState;
-  }
-
   return defaultWishState;
 };
 
@@ -80,17 +50,11 @@ const WishProvider = (props) => {
     dispatchWishAction({ type: "REMOVE", hnum: hnum });
   };
 
-  const clearWishHandler = () => {
-    dispatchWishAction({ type: "CLEAR" });
-  };
-
   // 1번 -> context 생성 파일로 넘어감
   const cartContext = {
     hosts: wishState.hosts,
-    //totalAmount: wishState.totalAmount,
     addHost: addItemToWishHandler,
     removeHost: removeItemFromWishHandler,
-    clearCart: clearWishHandler,
   };
 
   return (
