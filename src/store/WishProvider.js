@@ -10,9 +10,8 @@ const wishReducer = (state, action) => {
 
   if (action.type === "ADD") {
     let updatedHosts;
-
-    updatedHosts = state.hosts.concat(action.item); // concat으로 불변성 지키면서 값(호스트번호) 추가
-
+    updatedHosts = [...state.hosts];
+    updatedHosts = state.hosts.concat(action.hnum); // concat으로 불변성 지키면서 값(호스트번호) 추가
     return {
       hosts: updatedHosts,
     };
@@ -23,12 +22,11 @@ const wishReducer = (state, action) => {
       (host) => host === action.hnum
     );
     let updatedHosts;
-    if(existingHostIndex){
+    if(existingHostIndex == 0){
       // 존재하는 번호가 있다면
       updatedHosts = state.hosts.filter((host) => host !== action.hnum);
       // 넘어온 값 (삭제값) 이 아닌 것들만 남겨놓음
     }
-    
     return {
       hosts: updatedHosts,
     };

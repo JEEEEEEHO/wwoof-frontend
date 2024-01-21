@@ -23,6 +23,9 @@ import HostSearchPage, {
 
 import HostDetailPage, {loader as hostDetailLoader} from "./components/host/HostDetailPage";
 
+// WishList
+import WishListPage from "./components/wishlist/WishListPage";
+
 // Login Logout Join
 import LoginPage from "./components/login/LoginPage";
 import { action as signinAction } from "./components/login/LoginForm";
@@ -34,10 +37,10 @@ import SocialLogin from "./components/login/SocialLogin";
 
 // Mypage
 import SidebarLayout from "./components/mypage/SidebarLayout";
-import Myinfo from "./components/mypage/Myinfo";
-import MyinfoHost, {
+import MyinfoPage from "./components/mypage/MyinfoPage";
+import MyinfoHostPage, {
   loader as hostLoader,
-} from "./components/mypage/MyinfoHost";
+} from "./components/mypage/MyinfoHostPage";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +70,12 @@ const router = createBrowserRouter([
       {
         path: "socialLogin",
         element: <SocialLogin />,
+      },
+
+      // WishList
+      {
+        path: "wishList",
+        element: <WishListPage />,
       },
 
       // Host Search
@@ -100,14 +109,14 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Myinfo />,
+            element: <MyinfoPage />,
           },
           {
             path: "hostInfo",
             children: [
               {
                 index: true,
-                element: <MyinfoHost />,
+                element: <MyinfoHostPage />,
                 loader: hostLoader,
               },
             ],

@@ -7,8 +7,13 @@ function MainNavigation() {
   const token = useRouteLoaderData("root");
 
   const wishCtx = useContext(WishContext);
+  let numberOfWishHosts;
+  if (!wishCtx.hosts.length) {
+    numberOfWishHosts = 0;
+  } else {
+    numberOfWishHosts = wishCtx.hosts.length;
+  }
 
-  const numberOfWishHosts = wishCtx.hosts.length;
   return (
     <header className={classes.header}>
       <nav>
@@ -26,7 +31,7 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <NavLink to="/">
+            <NavLink to="wishList">
               <span>위시리스트</span>
               <span>{numberOfWishHosts}</span>
             </NavLink>
