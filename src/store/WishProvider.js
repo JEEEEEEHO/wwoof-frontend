@@ -1,17 +1,41 @@
-import { useReducer } from "react";
+import { useReducer, json } from "react";
 import WishContext from "./wish-context";
 
 const defaultWishState = {
   hosts: [],
 };
 // 3번
-const wishReducer = (state, action) => {
+const wishReducer = async (state, action) => {
   // 아래의 것들은 값을 계산하기 위함 (같은 것을 집어넣어도 값은 증가)
+
+  let headers = new Headers();
+
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if (accessToken && accessToken !== null) {
+    headers.append("Authorization", "Bearer " + accessToken);
+  }
 
   if (action.type === "ADD") {
     let updatedHosts;
     updatedHosts = [...state.hosts];
     updatedHosts = state.hosts.concat(action.hnum); // concat으로 불변성 지키면서 값(호스트번호) 추가
+    
+    // action.hnum fetch INSERT
+    const response = await fetch("http://localhost:8080/api/wishList/save", {
+      method: "POST",
+      headers: headers,
+      body : JSON.stringify({
+        "hostNum" : action.hnum
+      })
+    });
+
+    if (response.state === 422) {
+      return response;
+    }
+    if (!response.ok) {
+      throw json({ message: "Could not save board." }, { status: 500 });
+    }
+
     return {
       hosts: updatedHosts,
     };
@@ -22,11 +46,29 @@ const wishReducer = (state, action) => {
       (host) => host === action.hnum
     );
     let updatedHosts;
-    if(existingHostIndex == 0){
+
+    if (existingHostIndex == 0) {
       // 존재하는 번호가 있다면
       updatedHosts = state.hosts.filter((host) => host !== action.hnum);
       // 넘어온 값 (삭제값) 이 아닌 것들만 남겨놓음
     }
+
+    // action.hnum 를 찾아서 삭제해주는 fetch DELETE
+    const response = await fetch("http://localhost:8080/api/wishList/delete", {
+      method: "DELETE",
+      headers: headers,
+      body : JSON.stringify({
+        "hostNum" : action.hnum
+      })
+    });
+
+    if (response.state === 422) {
+      return response;
+    }
+    if (!response.ok) {
+      throw json({ message: "Could not save board." }, { status: 500 });
+    }
+
     return {
       hosts: updatedHosts,
     };

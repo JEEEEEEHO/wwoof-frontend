@@ -1,6 +1,6 @@
 import { useContext, useState, json } from "react";
 import WishContext from "../../store/wish-context";
-import WishListInclude from "./WishListInclude";
+import WishListInclude from "./WishList";
 
 const WishListPage = async () => {
   const wishCtx = useContext(WishContext);
@@ -19,7 +19,7 @@ const WishListPage = async () => {
     if (accessToken && accessToken !== null) {
       headers.append("Authorization", "Bearer " + accessToken);
     }
-    const response = await fetch("http://localhost:8080/api/wishList/save", {
+    const response = await fetch("http://localhost:8080/api/wishList/list", {
       method: "POST",
       headers: headers,
       body: formData,
