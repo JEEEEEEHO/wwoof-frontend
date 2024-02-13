@@ -8,10 +8,7 @@ const WishListPage = async () => {
     return <p>No Data In WishList</p>;
   } else {
     // 위시리스트에 값이 있다면 연결
-    const formData = new FormData();
-    wishCtx.hosts.forEach((hnum) => {
-      formData.append("wishList", hnum);
-    });
+    // 서버 단에서 로그인 한 
 
     let headers = new Headers();
 

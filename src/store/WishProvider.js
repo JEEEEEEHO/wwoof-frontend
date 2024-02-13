@@ -17,7 +17,7 @@ const wishReducer = async (state, action) => {
 
   if (action.type === "ADD") {
     let updatedHosts;
-    updatedHosts = [...state.hosts];
+    updatedHosts = [...state.hosts]; // 기존에 담은 배열을 넣어줌 
     updatedHosts = state.hosts.concat(action.hnum); // concat으로 불변성 지키면서 값(호스트번호) 추가
     
     // action.hnum fetch INSERT
