@@ -4,8 +4,10 @@ import WishListInclude from "./WishList";
 
 const WishListPage = async () => {
   const wishCtx = useContext(WishContext);
+  
   if (!wishCtx.hosts.length) {
     return <p>No Data In WishList</p>;
+
   } else {
     // 위시리스트에 값이 있다면 연결
     // 서버 단에서 로그인 한 
@@ -17,9 +19,8 @@ const WishListPage = async () => {
       headers.append("Authorization", "Bearer " + accessToken);
     }
     const response = await fetch("http://localhost:8080/api/wishList/list", {
-      method: "POST",
+      method: "GET",
       headers: headers,
-      body: formData,
     });
     if (!response.ok) {
       throw json({ message: "Could not save wishList." }, { status: 500 });

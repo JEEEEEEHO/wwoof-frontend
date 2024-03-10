@@ -1,9 +1,11 @@
 import { useReducer, json } from "react";
 import WishContext from "./wish-context";
+import { redirect } from "react-router-dom";
 
 const defaultWishState = {
   hosts: [],
 };
+
 // 3번
 const wishReducer = async (state, action) => {
   // 아래의 것들은 값을 계산하기 위함 (같은 것을 집어넣어도 값은 증가)
@@ -17,16 +19,16 @@ const wishReducer = async (state, action) => {
 
   if (action.type === "ADD") {
     let updatedHosts;
-    updatedHosts = [...state.hosts]; // 기존에 담은 배열을 넣어줌 
+    updatedHosts = [...state.hosts]; // 기존에 담은 배열을 넣어줌
     updatedHosts = state.hosts.concat(action.hnum); // concat으로 불변성 지키면서 값(호스트번호) 추가
-    
+
     // action.hnum fetch INSERT
     const response = await fetch("http://localhost:8080/api/wishList/save", {
       method: "POST",
       headers: headers,
-      body : JSON.stringify({
-        "hostNum" : action.hnum
-      })
+      body: JSON.stringify({
+        hostNum: action.hnum,
+      }),
     });
 
     if (response.state === 422) {
@@ -35,10 +37,14 @@ const wishReducer = async (state, action) => {
     if (!response.ok) {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
-
-    return {
-      hosts: updatedHosts,
-    };
+    if (!response) {
+      alert("You need to Login");
+      return redirect("/login");
+    } else {
+      return {
+        hosts: updatedHosts,
+      };
+    }
   }
 
   if (action.type === "REMOVE") {
@@ -57,9 +63,9 @@ const wishReducer = async (state, action) => {
     const response = await fetch("http://localhost:8080/api/wishList/delete", {
       method: "DELETE",
       headers: headers,
-      body : JSON.stringify({
-        "hostNum" : action.hnum
-      })
+      body: JSON.stringify({
+        hostNum: action.hnum,
+      }),
     });
 
     if (response.state === 422) {
