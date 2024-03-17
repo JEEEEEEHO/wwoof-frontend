@@ -6,7 +6,7 @@ const defaultWishState = {
   hosts: [],
 };
 
-// 3번
+// 2번
 const wishReducer = async (state, action) => {
   // 아래의 것들은 값을 계산하기 위함 (같은 것을 집어넣어도 값은 증가)
 
@@ -26,9 +26,7 @@ const wishReducer = async (state, action) => {
     const response = await fetch("http://localhost:8080/api/wishList/save", {
       method: "POST",
       headers: headers,
-      body: JSON.stringify({
-        hostNum: action.hnum,
-      }),
+      body: action.hnum,
     });
 
     if (response.state === 422) {
@@ -37,14 +35,10 @@ const wishReducer = async (state, action) => {
     if (!response.ok) {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
-    if (!response) {
-      alert("You need to Login");
-      return redirect("/login");
-    } else {
-      return {
-        hosts: updatedHosts,
-      };
-    }
+
+    return {
+      hosts: updatedHosts,
+    };
   }
 
   if (action.type === "REMOVE") {
@@ -63,9 +57,7 @@ const wishReducer = async (state, action) => {
     const response = await fetch("http://localhost:8080/api/wishList/delete", {
       method: "DELETE",
       headers: headers,
-      body: JSON.stringify({
-        hostNum: action.hnum,
-      }),
+      body: action.hnum,
     });
 
     if (response.state === 422) {
@@ -82,12 +74,13 @@ const wishReducer = async (state, action) => {
   return defaultWishState;
 };
 
+// 1번
 const WishProvider = (props) => {
   const [wishState, dispatchWishAction] = useReducer(
     wishReducer,
     defaultWishState
   );
-  // 2번
+
   const addItemToWishHandler = (hnum) => {
     dispatchWishAction({ type: "ADD", hnum: hnum });
   };
@@ -96,7 +89,7 @@ const WishProvider = (props) => {
     dispatchWishAction({ type: "REMOVE", hnum: hnum });
   };
 
-  // 1번 -> context 생성 파일로 넘어감
+  // 3번
   const cartContext = {
     hosts: wishState.hosts,
     addHost: addItemToWishHandler,
