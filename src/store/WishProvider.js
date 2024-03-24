@@ -90,14 +90,14 @@ const WishProvider = (props) => {
   };
 
   // 3번
-  const cartContext = {
+  const wishContext = {
     hosts: wishState.hosts,
     addHost: addItemToWishHandler,
     removeHost: removeItemFromWishHandler,
   };
 
   return (
-    <WishContext.Provider value={cartContext}>
+    <WishContext.Provider value={wishContext}>
       {/* 4번 */}
       {props.children}
     </WishContext.Provider>

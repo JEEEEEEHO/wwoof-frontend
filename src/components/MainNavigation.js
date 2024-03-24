@@ -9,7 +9,7 @@ function MainNavigation() {
   const wishCtx = useContext(WishContext);
   let numberOfWishHosts;
   if (!wishCtx.hosts.length) {
-    numberOfWishHosts = 0;
+    numberOfWishHosts = "";
   } else {
     numberOfWishHosts = wishCtx.hosts.length;
   }
