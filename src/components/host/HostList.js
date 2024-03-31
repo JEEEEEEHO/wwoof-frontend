@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { json } from "react";
 import emptyWishList from "../../img/emptyWishList.png";
-import fullWishList from "../../img/fullWishList.png"
+import fullWishList from "../../img/fullWishList.png";
 import { useContext, useState } from "react";
 import WishContext from "../../store/wish-context";
 
@@ -9,14 +10,55 @@ const HostList = (props) => {
 
   const [chosenWish, setChosenWish] = useState(false);
 
-  const wishItemRemoveHandler = (id) => {
+  const wishItemRemoveHandler = async (id) => {
     setChosenWish(false);
     wishCtx.removeHost(id);
+
+    let headers = new Headers();
+
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken && accessToken !== null) {
+      headers.append("Authorization", "Bearer " + accessToken);
+    }
+    // action.hnum 를 찾아서 삭제해주는 fetch DELETE
+    const response = await fetch("http://localhost:8080/api/wishList/delete", {
+      method: "DELETE",
+      headers: headers,
+      body: id,
+    });
+
+    if (response.state === 422) {
+      return response;
+    }
+    if (!response.ok) {
+      throw json({ message: "Could not save board." }, { status: 500 });
+    }
   };
 
-  const wishItemAddHandler = (id) => {
+  const wishItemAddHandler = async (id) => {
     setChosenWish(true);
     wishCtx.addHost(id);
+
+    let headers = new Headers();
+
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    if (accessToken && accessToken !== null) {
+      headers.append("Authorization", "Bearer " + accessToken);
+    }
+
+    // action.hnum fetch INSERT
+    const response = await fetch("http://localhost:8080/api/wishList/save", {
+      method: "POST",
+      headers: headers,
+      body: id,
+    });
+
+    if (response.state === 422) {
+      return response;
+    }
+    if (!response.ok) {
+      throw json({ message: "Could not save board." }, { status: 500 });
+    }
   };
 
   for (const { hnum } of props.hosts) {
@@ -37,7 +79,9 @@ const HostList = (props) => {
                   type="button"
                   aria-label="위시리스트에 저장"
                   onClick={
-                    chosenWish ? ()=> wishItemRemoveHandler(host.hnum) : ()=>wishItemAddHandler(host.hnum)
+                    chosenWish
+                      ? () => wishItemRemoveHandler(host.hnum)
+                      : () => wishItemAddHandler(host.hnum)
                   }
                 >
                   {chosenWish ? (
