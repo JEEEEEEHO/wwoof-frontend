@@ -2,16 +2,14 @@ import { Link } from "react-router-dom";
 import { json } from "react";
 import emptyWishList from "../../img/emptyWishList.png";
 import fullWishList from "../../img/fullWishList.png";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import WishContext from "../../store/wish-context";
 
 const HostList = (props) => {
   const wishCtx = useContext(WishContext);
 
-  const [chosenWish, setChosenWish] = useState(false);
 
   const wishItemRemoveHandler = async (id) => {
-    setChosenWish(false);
     wishCtx.removeHost(id);
 
     let headers = new Headers();
@@ -36,7 +34,6 @@ const HostList = (props) => {
   };
 
   const wishItemAddHandler = async (id) => {
-    setChosenWish(true);
     wishCtx.addHost(id);
 
     let headers = new Headers();
@@ -79,12 +76,12 @@ const HostList = (props) => {
                   type="button"
                   aria-label="위시리스트에 저장"
                   onClick={
-                    chosenWish
+                    wishCtx.chosenWish.get(host.hnum)
                       ? () => wishItemRemoveHandler(host.hnum)
                       : () => wishItemAddHandler(host.hnum)
                   }
                 >
-                  {chosenWish ? (
+                  {wishCtx.chosenWish.get(host.hnum) ? (
                     <img
                       src={fullWishList}
                       alt="wishlist"

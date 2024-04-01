@@ -4,6 +4,7 @@ import { redirect } from "react-router-dom";
 
 const defaultWishState = {
   hosts: [],
+  chosenWish : false
 };
 
 // 2번
@@ -15,8 +16,12 @@ const wishReducer =  (state, action) => {
     updatedHosts = [...state.hosts]; // 기존에 담은 배열을 넣어줌
     updatedHosts = state.hosts.concat(action.hnum); // concat으로 불변성 지키면서 값(호스트번호) 추가
 
+    let map = new Map([...state.chosenWish, [action.hnum, true]]);
+    console.log(map.keys + " : " + map.values);
+
     return {
       hosts: updatedHosts,
+      chosenWish : map
     };
   }
 
@@ -31,8 +36,12 @@ const wishReducer =  (state, action) => {
       updatedHosts = state.hosts.filter((host) => host !== action.hnum);
       // 넘어온 값 (삭제값) 이 아닌 것들만 남겨놓음
     }
+
+    let map = new Map([...state.chosenWish, [action.hnum, false]]);
+    console.log(map.keys + " : " + map.values);
     return {
       hosts: updatedHosts,
+      chosenWish : map
     };
   }
 
@@ -57,6 +66,7 @@ const WishProvider = (props) => {
   // 3번
   const wishContext = {
     hosts: wishState.hosts,
+    chosenWish : wishState.chosenWish,
     addHost: addItemToWishHandler,
     removeHost: removeItemFromWishHandler,
   };
