@@ -33,28 +33,28 @@ import { useLoaderData, json } from "react-router-dom";
 
  export async function loader() {
 
-    let headers = new Headers({
-      "Content-Type": "application/json",
-    });
-    
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if (accessToken && accessToken !== null) {
-      headers.append("Authorization", "Bearer " + accessToken);
-    }
+  let headers = new Headers({
+    "Content-Type": "application/json",
+  });
   
-    const response = await fetch("http://localhost:8080/api/host/list", {
-      method: "GET",
-      headers: headers,
-    });
-  
-    if (!response.ok) {
-      throw json(
-        { message: "Could not fetch events." },
-        {
-          status: 500,
-        }
-      );
-    } else {
-        return response;
-    }
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if (accessToken && accessToken !== null) {
+    headers.append("Authorization", "Bearer " + accessToken);
   }
+
+  const response = await fetch("http://localhost:8080/api/host/list", {
+    method: "GET",
+    headers: headers,
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: "Could not fetch events." },
+      {
+        status: 500,
+      }
+    );
+  } else {
+      return response;
+  }
+}
