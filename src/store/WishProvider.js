@@ -3,8 +3,7 @@ import WishContext from "./wish-context";
 import { redirect } from "react-router-dom";
 
 const defaultWishState = {
-  hosts: [],
-  chosenWish : false
+  hosts: []
 };
 
 // 2번
@@ -60,7 +59,6 @@ const WishProvider = (props) => {
   // 3번
   const wishContext = {
     hosts: wishState.hosts,
-    chosenWish : wishState.chosenWish,
     addHost: addItemToWishHandler,
     removeHost: removeItemFromWishHandler,
   };

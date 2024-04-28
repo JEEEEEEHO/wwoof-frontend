@@ -21,7 +21,6 @@ import HostSearchPage, {
   loader as hostsLoader,
 } from "./components/host/HostSearchPage";
 
-import HostList, {loader as wishListsLoader} from "./components/host/HostList";
 import HostDetailPage, {loader as hostDetailLoader} from "./components/host/HostDetailPage";
 
 // WishList
@@ -87,13 +86,6 @@ const router = createBrowserRouter([
             index: true,
             element: <HostSearchPage />,
             loader: hostsLoader,
-            // children : [
-            //   {
-            //     index : true,
-            //     element : <HostList />,
-            //     loader : wishListsLoader
-            //   }
-            // ]
           },
           {
             path: ":hostNum",
