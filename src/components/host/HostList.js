@@ -5,12 +5,15 @@ import fullWishList from "../../img/fullWishList.png";
 import { useContext } from "react";
 import WishContext from "../../store/wish-context";
 
-const HostList = ({ hostsList, wishList }) => {
+const HostList = ({ hostsList, wishList, setWishList }) => {
   const wishCtx = useContext(WishContext);
 
+  // wishList 체크 
   const wishItemCheckHandler = (hnum) => {
     return wishList.includes(hnum);
   };
+
+  // Handler 함수 검증 부분 
   const wishItemContextCheckHandler = (hnum) => {
     if(wishList.includes(hnum)){
       wishItemRemoveHandler(hnum);
@@ -41,6 +44,8 @@ const HostList = ({ hostsList, wishList }) => {
     if (!response.ok) {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
+
+    setWishList(wishList.filter(wish => wish.wishNum !== id));
   };
 
   const wishItemAddHandler = async (id) => {
@@ -66,6 +71,9 @@ const HostList = ({ hostsList, wishList }) => {
     if (!response.ok) {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
+    const newWishList = response.json();
+
+    setWishList([...newWishList]);
   };
 
   for (const { hnum } of hostsList) {

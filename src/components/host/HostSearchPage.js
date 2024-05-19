@@ -21,7 +21,7 @@ const HostSearchPage = () => {
     <>
       <HostOption setHostsList={setHostsList} />
       {/* 검색에서 찾음 */}
-      <HostList hostsList={hostsList} wishList={wishList} />
+      <HostList hostsList={hostsList} wishList={wishList} setWishList = {setWishList} />
       {/* 검색에서 찾은 값을 리스트로 보냄 */}
       <HostMap hosts={hostsList} />
     </>
