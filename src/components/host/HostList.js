@@ -8,11 +8,6 @@ import WishContext from "../../store/wish-context";
 const HostList = ({ hostsList, wishList, setWishList }) => {
   const wishCtx = useContext(WishContext);
 
-  // wishList 체크 
-  const wishItemCheckHandler = (hnum) => {
-    return wishList.includes(hnum);
-  };
-
   // Handler 함수 검증 부분 
   const wishItemContextCheckHandler = (hnum) => {
     if(wishList.includes(hnum)){
@@ -96,7 +91,7 @@ const HostList = ({ hostsList, wishList, setWishList }) => {
                   aria-label="위시리스트에 저장"
                   onClick={() => wishItemContextCheckHandler(host.hnum)}
                 >
-                  {wishItemCheckHandler(host.hnum) ? (
+                  {wishList.includes(hnum)? (
                     <img
                       src={fullWishList}
                       alt="wishlist"
