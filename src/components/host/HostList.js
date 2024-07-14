@@ -10,7 +10,8 @@ const HostList = ({ hostsList, wishList, setWishList }) => {
 
   // Handler 함수 검증 부분 
   const wishItemContextCheckHandler = (hnum) => {
-    if(wishList.includes(hnum)){
+    let flag = wishList.findIndex(wish => wish.hostNum === hnum);
+    if(flag !== -1){
       wishItemRemoveHandler(hnum);
     } else{
       wishItemAddHandler(hnum);
@@ -40,7 +41,7 @@ const HostList = ({ hostsList, wishList, setWishList }) => {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
 
-    setWishList(wishList.filter(wish => wish.wishNum !== id));
+    setWishList(wishList.filter(wish => wish.hostNum !== id));
   };
 
   const wishItemAddHandler = async (id) => {
@@ -67,8 +68,8 @@ const HostList = ({ hostsList, wishList, setWishList }) => {
       throw json({ message: "Could not save board." }, { status: 500 });
     }
     const newWishList = response.json();
+    newWishList.then((result)=> setWishList(result));
 
-    setWishList([...newWishList]);
   };
 
   for (const { hnum } of hostsList) {
@@ -91,7 +92,7 @@ const HostList = ({ hostsList, wishList, setWishList }) => {
                   aria-label="위시리스트에 저장"
                   onClick={() => wishItemContextCheckHandler(host.hnum)}
                 >
-                  {wishList.includes(hnum)? (
+                  {wishList.findIndex(wish => wish.hostNum === hnum) !== -1? (
                     <img
                       src={fullWishList}
                       alt="wishlist"

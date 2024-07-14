@@ -8,7 +8,7 @@ function MainNavigation() {
 
   const wishCtx = useContext(WishContext);
   let numberOfWishHosts;
-  if (!wishCtx.hosts.length) {
+  if (wishCtx.hosts === undefined|| !wishCtx.hosts.length) {
     numberOfWishHosts = "";
   } else {
     numberOfWishHosts = wishCtx.hosts.length;

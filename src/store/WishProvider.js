@@ -1,6 +1,5 @@
-import { useReducer, json } from "react";
+import { useReducer } from "react";
 import WishContext from "./wish-context";
-import { redirect } from "react-router-dom";
 
 const defaultWishState = {
   hosts: []

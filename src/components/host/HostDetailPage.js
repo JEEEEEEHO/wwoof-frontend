@@ -1,10 +1,13 @@
 import { json, useRouteLoaderData } from "react-router-dom";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 function HostDetailPage() {
   const data = useRouteLoaderData("host-detail");
   return (
     <>
-      <h1>{data.hostNum}</h1>
+    <div>
+    <h1>{data.hostNum}</h1>
       <ul>
         {data.hostImg.map((img) => (
           <li key={img.hostImg_turn}>
@@ -24,6 +27,11 @@ function HostDetailPage() {
         <li>{data.intro}</li>
         <li>{data.maxPpl}</li>
       </ul>
+    </div>
+    <div>
+      <Calendar />
+    </div>
+
     </>
   );
 }
@@ -33,7 +41,6 @@ export default HostDetailPage;
 export async function loader({ request, params }) {
   //params 로 작업 가능
   const hnum = params.hostNum;
-  console.log("hnum : " + hnum);
   const response = await fetch("http://localhost:8080/api/host/" + hnum);
 
   if (!response.ok) {
