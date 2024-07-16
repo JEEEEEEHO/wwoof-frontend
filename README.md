@@ -10,6 +10,8 @@ https://www.notion.so/4e48c0e35b6445a380656449666a25c1?v=95155cce16bb48f2b2735d7
    - React
 
 **2. 모듈별 기능**   
+![20240716_164020](https://github.com/user-attachments/assets/f51a1171-2cfc-4113-b901-c906b141568d)
+
     2-1. 위시리스트 GNB
     - WishList : useContext 활용으로 어떤 페이지에서도 값 가지고 가도록 함 
 
