@@ -30,12 +30,12 @@ function MainNavigation() {
       </nav>
       <nav>
         <ul>
-          <li>
+          {/* <li>
             <NavLink to="wishList">
               <span>위시리스트</span>
               <span>{numberOfWishHosts}</span>
             </NavLink>
-          </li>
+          </li> */}
           {!token && (
             <li>
               <NavLink to="login">로그인</NavLink>

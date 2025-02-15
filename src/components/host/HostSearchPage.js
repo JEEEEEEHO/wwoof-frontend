@@ -23,7 +23,7 @@ const HostSearchPage = () => {
       {/* 검색에서 찾음 */}
       <HostList hostsList={hostsList} wishList={wishList} setWishList = {setWishList} />
       {/* 검색에서 찾은 값을 리스트로 보냄 */}
-      <HostMap hosts={hostsList} />
+      {/* <HostMap hosts={hostsList} /> */}
     </>
   );
 };
@@ -35,6 +35,7 @@ export async function loader() {
     "Content-Type": "application/json",
   });
 
+  // 
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
   if (accessToken && accessToken !== null) {
     headers.append("Authorization", "Bearer " + accessToken);
@@ -59,6 +60,7 @@ export async function loader() {
       }
     );
   } else {
+    
     let hosts = await responseHost.json();
     let wishs = await responseWish.json();
 

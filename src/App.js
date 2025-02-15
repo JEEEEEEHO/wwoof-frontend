@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Homepage from "./components/pages/Homepage";
 import RoutLayout from "./components/RoutLayout";
-import ErrorPage from "./components/pages/Error";
 
 // Board
 import BoardPage, {

@@ -3,7 +3,7 @@ import { useNavigate, useNavigation, json, redirect } from "react-router-dom";
 
 import FileList from "./FileList";
 import File from "./File";
-import AddressFind from "./AddressFind";
+//import AddressFind from "./AddressFind";
 
 const MAX_COUNT = 5;
 
@@ -278,11 +278,11 @@ function HostRegisterForm({ method, host }) {
       <label htmlFor="intro">소개</label>
       <textarea name="intro" defaultValue={host ? host.intro : ""}></textarea>
       <br />
-      <AddressFind
+      {/* <AddressFind
         setInputAddress={setInputAddress}
         setLat={setLat}
         setLng={setLng}
-      />
+      /> */}
       <label htmlFor="address">주소</label>
       <input
         type="text"
